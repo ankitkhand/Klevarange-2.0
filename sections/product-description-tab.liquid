@@ -1,0 +1,398 @@
+{%- assign productDescSize = product.description | size | plus: 0 -%}
+
+<div class="product-description-tab">
+    <div class="page-width">
+        <ul class="product_dropdown">
+            <div class="titles">
+                {%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                        {%- when 'Description' -%}
+                            <h2 id="title-{{- block.type | downcase -}}" class="title"><span class="hidetablet">Product </span>Description</h2>
+                        {%- when 'Bed-Size' -%}
+                          {% if product.metafields.additions['bed_size'] %}
+                            <h2><a href="{{ product.metafields.additions['bed_size'] }}">Find <span class="small-hide">Your</span> Bed Size</a></h2>
+                          {% endif %}
+                        {% when 'Caption' %}
+                            {% if product.metafields.additions['product_details'] %}
+                                <h2 id="title-{{- block.type | downcase -}}" class="title">{{- block.settings.description_excerpt -}}</h2>
+                            {% endif %}
+                        {% when 'Specification' %}
+                            {% if product.metafields.additions.Specifications %}
+                                <h2 id="title-{{- block.type | downcase -}}" class="title">{{- block.settings.specifications -}}</h2>
+                            {% endif %}
+                        {% when 'Size' %}
+                            {%- if product.metafields.additions['size_guide'] or product.metafields.additions['Size Guide'] -%}
+                                <h2 id="title-{{- block.type | downcase -}}" class="title">{{ block.settings.sizeguide }}</h2>
+                            {%- endif -%}
+                        {%- when 'Care' -%}
+                            {% if product.metafields.additions['Care Instructions'] %}
+                                <h2 id="title-{{- block.type | downcase -}}" class="title">{{- block.settings.care -}}</h2>
+                            {% endif %}
+                        {%- when 'FAQ' -%}
+                            {% if product.metafields.additions['FAQ'] %}
+                                <h2 id="title-{{- block.type | downcase -}}" class="title">{{- block.settings.FAQ -}}</h2>
+                            {% endif %}
+                        {% when 'Warranty' %}
+                            <a id="title-{{forloop.index}}" class="title" href="{{product.metafields.additions[namespace_key]}}"><h2>{{ namespace_key | replace: '_', ' ' | capitalize }}</h2></a>
+                        {% when 'guidlink' %}
+                            <a id="title-{{forloop.index}}" class="title" href="{{product.metafields.additions[namespace_key]}}"><h2>{{ namespace_key | replace: '_', ' ' | capitalize }}</h2></a>
+                    {%- endcase -%}
+                    
+
+                {%- endfor -%}
+                
+                <h2 id="title-r" class="title">
+                  <div class="custom_review">
+                    {% liquid
+                              assign rating_decimal = 0
+                              assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
+                              if decimal >= 0.3 and decimal <= 0.7
+                                assign rating_decimal = 0.8
+                              elsif decimal > 0.7
+                                assign rating_decimal = 1
+                              endif
+                            %}
+        
+                    {% if product.metafields.reviews.rating_count %}
+                      {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+        
+                      <div
+                        class="rating"
+                        role="img"
+                        aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}">
+                        <span
+                          aria-hidden="true"
+                          class="rating-star color-icon-{{ settings.accent_icons }}"
+                          style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"></span>
+                      </div>
+                    {% endif %}
+                    <review class="rating-count caption" style="font-size: inherit;">
+                      {{ product.metafields.reviews.rating_count }} Reviews
+                      <span class="visually-hidden">
+                        {{- product.metafields.reviews.rating_count }}
+                        {{ 'accessibility.total_reviews' | t -}}
+                      </span>
+                    </review>
+                  </div>
+                </h2>
+
+                {%- if product.metafields.additions.helpguide == 'yes' and product.metafields.additions.guidelink -%}
+                  <h2 id="title-h" class="title help">
+                    <a href="{{- product.metafields.additions.guidelink -}}">Help
+                      <span class="small-hide">Videos</span>
+                      & Tips</a>
+                  </h2>
+                {%- endif -%}
+
+                {%- if product.type == 'Bed Sheets' -%}
+                  <h2 id="title-helpguide" class="title help">
+                    <a id="nav-profile-tab" href="https://supersleeperpro.com.au/pages/sheets-care-page" >
+                      Care & Size Info
+                    </a>
+                  </h2>
+                {%- endif -%}
+        
+                <h2 id="title-s" class="title">Shipping <span class="hidetablet">& Delivery</span></h2>
+            </div>
+
+            <div class="content">
+                {%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                        {%- when 'Description' -%}
+                            <div id="text-{{- block.type | downcase -}}" class="text">
+                                <div class="accordion-inner {% if productDescSize > 420 %}readmore{% endif %} pos_relative">
+                                {% comment %} {{ productDescSize }} {% endcomment %}
+    
+                                  <div class="product-description">
+                                    <div class="inner_description">
+                                      {%- unless template.suffix contains 'pf' -%}
+                                        {{ product.description }}                         
+                                      {%- endunless -%}
+                                    </div> 
+                                  </div>
+                      
+                                </div>
+                            </div>
+
+                        {% when 'Caption' %}
+                            {% if product.metafields.additions['product_details'] %}
+                                <div id="text-{{- block.type | downcase -}}" class="text">
+                                    <div class="accordion-inner pos_relative">
+                                    {{ product.metafields.additions['product_details'] }}                 
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% when 'Specification' %}
+                            {% if product.metafields.additions['Specifications'] %}
+                                <div id="text-{{- block.type | downcase -}}" class="text">
+                                    <div class="accordion-inner pos_relative">
+                                    {{ product.metafields.additions['Specifications'] }}                 
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% when 'Size' %}
+                            {%- if product.metafields.additions['size_guide'] or product.metafields.additions['Size Guide'] -%}
+                                <div id="text-{{- block.type | downcase -}}" class="text">
+                                    <div class="accordion-inner size_guide"> 
+                                        <div class="tableoverflow">
+                                        {{ product.metafields.additions['Size Guide'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% when 'Care' %}
+                            {% if product.metafields.additions['Care Instructions'] %}
+                                <div id="text-{{- block.type | downcase -}}" class="text">
+                                    <div class="accordion-inner size_guide"> 
+                                        <div class="tableoverflow">
+                                        {{ product.metafields.additions['Care Instructions'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% when 'FAQ' %}
+                            {% if product.metafields.additions.FAQ %}
+                                <div id="text-{{- block.type | downcase -}}" class="text">
+                                    <div class="accordion-inner size_guide"> 
+                                        <div class="tableoverflow">
+                                        {{ product.metafields.additions['FAQ'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                    {%- endcase -%}
+
+
+                {%- endfor -%}
+                <div id="text-r" class="text">
+                    {% render 'okendo-reviews-widget', product: product %}
+                </div>
+                <div id="text-s" class="text">
+                    {% render 'shipping-delivery' %}
+                </div>
+            </div>
+        </ul>
+    </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Product Metafields",
+    "max_blocks": 10,
+    "settings": [
+      {
+        "type": "checkbox",
+        "label": "Active link",
+        "id": "checkbox",
+        "info": "By clicking on the link, it will redirect the to the page instead of dropping down",
+        "default": false
+      }
+    ],
+    "blocks":[
+      {
+        "type": "Description",
+        "name": "Product Descriptions",
+        "limit": 10,
+        "settings":[
+          {
+            "type": "html",
+            "label": "Product Description",
+            "id": "product_desc",
+            "default": "Product Description"
+          }
+        ]
+      },
+      {
+        "type": "Caption",
+        "name": "Product Details",
+        "limit": 10,
+        "settings":[
+          {
+            "type": "html",
+            "label": "Product Details",
+            "id": "description_excerpt",
+            "default": "Product Details"
+          }
+        ]
+      },
+      {
+        "type": "Bed-Size",
+        "name": "Find Bed Size",
+        "settings":[
+          {
+            "type": "html",
+            "label": "Bed Size",
+            "id": "bedsize"
+          }
+        ]
+      },
+      {
+        "type": "Specification",
+        "name": "Specifications",
+        "limit": 10,
+        "settings":[
+          {
+            "type": "html",
+            "label": "Specifications",
+            "id": "specifications",
+            "default": "Specifications"
+          }
+        ]
+      },
+      {
+        "type": "Care",
+        "name": "Care Instructions",
+        "limit": 10,
+        "settings":[
+          {
+            "type": "html",
+            "label": "Care Instructions",
+            "id": "care",
+            "default": "Care Instructions"
+          }
+        ]
+      },
+      {
+        "type": "Size",
+        "name": "Size Guide",
+        "limit": 10,
+        "settings":[
+          {
+            "type": "html",
+            "label": "Size Guide",
+            "id": "sizeguide",
+            "default": "Size Guide"
+          }
+        ]
+      },
+      {
+        "type": "FAQ",
+        "name": "FAQ",
+        "limit": 10,
+        "settings":[
+          {
+            "type": "html",
+            "label": "FAQ",
+            "id": "FAQ",
+            "default": "FAQ"
+          }
+        ]
+      }
+    ],
+    "presets":[
+      {
+        "category": "Product Metafields",
+        "name": "Metafields",
+        "blocks":[
+            {
+              "type": "Description"
+            },
+            {
+              "type": "Bed-Size"
+            },
+            {
+              "type": "Caption"
+            },
+            {
+              "type": "Specification"
+            },
+            {
+              "type": "Size"
+            },
+            {
+              "type": "Care"
+            },
+            {
+              "type": "FAQ"
+            }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  .product-description [data-pf-type="ProductPreview"]{display:none }
+</style>
+
+<script>
+    document.querySelector('.titles > :first-child').classList.add('title-active');
+
+
+    const titles = document.querySelectorAll('.title');
+    const texts = document.querySelectorAll('.text');
+
+    titles.forEach(title => {
+      title.addEventListener('click', function() {
+
+        if (this.classList.contains('help')) {
+          console.log('it contains help class');
+          return;
+        }
+        
+        const id = this.id.split('-')[1];
+        console.log(id);
+        
+        texts.forEach(text => {
+          if(text.id === `text-${id}`) {
+            text.style.display = 'block';
+          } else {
+            text.style.display = 'none';
+          }
+        });
+
+        titles.forEach(title => title.classList.remove('title-active'));
+        this.classList.add('title-active');
+
+      });
+    });
+
+  window.addEventListener('DOMContentLoaded',(event)=>{
+    //const sections = document.querySelectorAll('[data-pf-type="Section"]');
+    const pf = document.querySelector('#__pf');
+
+    if(pf){
+      const productBottom = document.querySelector('.product-description-tab .product-description');
+      productBottom.appendChild(pf);
+    }
+
+  });
+  
+</script>
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', function(){
+    if (!Shopify.designMode) {
+      // move product section into the 
+
+      let nativePageFlySection = document.querySelector('.global_product_desc'); 
+
+
+      if(nativePageFlySection){
+        const productDescription = document.querySelector('.shopify-section .accordion-inner .product-description');
+        const productSections = document.querySelectorAll('body .global_product_desc');
+        productDescription.querySelector('.inner_description').innerHTML = '';
+    
+        productSections.forEach(section => {
+          productDescription.appendChild(section);
+        })
+        // end 
+        return;
+      }
+
+      let pageFlyContents = document.querySelector('#__pf');
+      if(pageFlyContents){
+        const productDescription = document.querySelector('.shopify-section .accordion-inner .product-description');
+        const productSections = document.querySelectorAll('body .global_product_desc');
+        productDescription.querySelector('.inner_description').innerHTML = '';
+    
+        productSections.forEach(section => {
+          productDescription.appendChild(section);
+        })
+        // end   
+  
+        console.log('section moved');
+      }
+    }
+  })
+</script> 

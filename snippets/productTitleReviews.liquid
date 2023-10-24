@@ -1,0 +1,35 @@
+{% if product.tags contains 'bogofsheet' %}<div class="bogosheet">{% endif %}
+  {% if hidetab %}
+      <h1 class="product_title  {% unless product.metafields.reviews.rating_count %}adjustproducttitle{% endunless %}">{{ product.title }}</h1>
+  {%- else -%}
+      <h2 class="product_title  {% unless product.metafields.reviews.rating_count %}adjustproducttitle{% endunless %}">{{ product.title }}</h2>
+  {% endif %}
+{% if product.tags contains 'bogofsheet' %}</div>{% endif %}
+
+  {% if product.tags contains 'bogofsheet' %}
+    <span class="bogofsheet">You will receive - 2x Flat Sheets, 2x Extra Long Drop Fitted Sheets, 4x Luxurious Pillowcases + 1x Free Bonus Pillow</span>
+  {% endif %}
+
+{% render 'custom-reviews' %}
+
+<style>
+  p.atcmessage{
+    color: #3954a5;
+    font-weight: 500;
+    margin: 0 0 1em;
+    line-height: 1.5;
+    font-size: clamp(14px, 2vw, 16px);
+  }
+
+  span.bogofsheet{
+    font-size: 12px;
+    line-height: 1.5;
+    display: block;
+    margin-bottom: 1em;
+    font-weight: 500;
+  }
+
+  .bogosheet h1.product_title, .bogosheet h2.product_title{
+    margin-bottom: 4px;
+  }
+</style>

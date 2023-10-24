@@ -1,0 +1,29 @@
+{% if product.tags contains 'morning-show' %}
+    <div class="topmsg morning_show">
+        <p><strong>Morning Show</strong> Limited Special</p>
+    </div>
+{% elsif product.tags contains 'back-sleepers' %}
+    <div class="topmsg back_sleepers">
+        <p>Back Sleepers</p>
+    </div>
+{% elsif product.tags contains 'stomach-sleepers' %}
+    <div class="topmsg stomach_sleepers">
+        <p>Stomach Sleepers</p>
+    </div>
+{% elsif product.tags contains 'side-sleepers' %}
+    <div class="topmsg side_sleepers">
+        <p>Side Sleepers</p>
+    </div>
+{% elsif product.tags contains 'back-side-sleepers' %}
+    <div class="topmsg back_side_sleepers">
+        <p>Back & Side Sleepers</p>
+    </div>
+{% elsif product.tags contains 'side-stomach-sleepers' %}
+    <div class="topmsg side_stomach_sleepers">
+        <p>Side & Stomach Sleepers</p>
+    </div>
+{% elsif product.tags contains 'back-stomach-side-sleepers' %}
+    <div class="topmsg back_stomach_side_sleepers">
+        <p>Back, Stomach & Side Sleepers</p>
+    </div>
+{% endif %}

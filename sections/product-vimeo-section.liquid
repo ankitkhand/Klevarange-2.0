@@ -1,0 +1,206 @@
+{% style %}
+    .vimeo_section.{{ section.id }} .content_ h6{
+        color: {{ section.settings.mini-color }};
+        font-size: clamp(14px, 2vw, 16px);
+        font-weight: 600;
+        margin-bottom: clamp(1rem, 2vw, 2rem);
+    }
+
+    .vimeo_section.{{ section.id }}{
+        background-color: {{ section.settings.bg-color }};
+        padding: clamp(1.5em, 4vw, {{ section.settings.p-top }}em) 0 clamp(1.5em, 4vw, {{ section.settings.p-bottom }}em);
+    }
+
+    .vimeo_section.{{ section.id }} .pos_absolute {
+        display: flex!important;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+        height: auto!important;
+    }
+
+    .vimeo_section.{{ section.id }} .pos_absolute h5 {
+        position: relative;
+        bottom: 17px;
+        transform: rotate(-5deg);
+        margin: 0;
+    }
+{% endstyle %}
+
+
+<div class="vimeo_section {{ section.id }}">
+    <div class="page-width">
+
+        <div class="product_two_col_grid">
+            <div class="content_">
+                <h6>{{- section.settings.minititle -}}</h6>
+                <h2 class="p_title">{{- section.settings.title -}}</h2>
+
+                <ul class="icons">
+                    {%- for block in section.blocks -%}
+                        <li class="{% unless block.settings.icon == nil %}listicon_not{% endunless %}">
+                            {% unless block.settings.icon == nil %}
+                                <img src="{{- block.settings.icon | img_url: '60x' -}}" loading="lazy" alt="{{ block.settings.listtitle }}">
+                            {% endunless %} 
+                            {{ block.settings.listtitle }}
+                        </li>
+                    {%- endfor -%}
+                </ul>
+            </div>
+
+            <div class="left medias desktop pos_relative">
+
+              {% if section.settings.replace-vid == blank %}
+                
+                <div class="pos_absolute">
+                    <?xml version="1.0" encoding="UTF-8"?>
+                        <svg width="81px" height="86px" viewBox="0 0 81 86" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>A1E2A00C-E2A0-4B16-B923-BD18E073C064</title>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="SSP_Home_8_DT" transform="translate(-1173.000000, -2262.000000)" fill="#FD3170" fill-rule="nonzero">
+                                    <g id="Group-22-Copy" transform="translate(1213.452796, 2305.007359) rotate(-236.000000) translate(-1213.452796, -2305.007359) translate(1179.560660, 2280.004311)">
+                                        <path d="M54.7952065,44.9992225 C39.1216881,44.9992225 12.4836982,39.0991602 0.168330887,1.95101795 C-0.589349518,0.241757685 1.38568367,-1.01774531 2.61369597,1.14976109 C9.82560265,22.9043685 22.7080978,36.2652049 40.9051741,40.8615869 C54.5286611,44.3042999 66.216646,41.2787371 66.3316355,41.248369 L67,43.7226403 C66.8481772,43.7628369 61.9701326,45 54.7950226,45 L54.7952065,44.9992225 Z" id="Path"></path>
+                                        <path d="M57.0605189,50.0060967 C56.6399502,50.0060967 56.2291918,49.7889238 55.9855502,49.3928176 C55.6058844,48.7740574 55.7792719,47.9521549 56.3714299,47.5560344 L64.0881149,42.4038556 L57.7885759,38.4780355 C57.1839785,38.1014123 56.9865887,37.2850669 57.3475672,36.6551688 C57.7085456,36.0234183 58.4900927,35.8174974 59.0947128,36.1950468 L67.1635218,41.2230223 C67.5422999,41.4595761 67.7779067,41.8835081 67.7841434,42.34458 C67.7903672,42.8056282 67.5689744,43.2369911 67.1964353,43.4856113 L57.745761,49.7955163 C57.5332597,49.9383762 57.2949648,50.0060967 57.0602457,50.0060967 L57.0605189,50.0060967 Z" id="Path"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    <h5 class="designfont">{{- section.settings.asseenontv -}}</h5>
+                </div>
+
+                <!-- youtube -->
+                  <style>
+                    .embed-container {
+                      position: relative;
+                      padding-bottom: 56.25%;
+                      height: 0;
+                      overflow: hidden;
+                      max-width: 100%;
+                    }
+                    .embed-container iframe,
+                    .embed-container object,
+                    .embed-container embed {
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+      
+                  <div class="embed-container">
+
+                    <iframe src="https://youtube.com/embed/{{- section.settings.vimeo | remove: 'https://youtu.be/' -}}" frameborder="0" allowfullscreen=""
+                        allow=""
+                    >
+                    </iframe>
+                    
+                  </div> 
+                <!-- end youtube -->
+                {% else %}
+                  <img src="{{ section.settings.replace-vid | img_url: '600x' }}" loading="lazy" alt="{{- section.settings.title -}}" >
+                {% endif %}
+              
+            </div>
+        </div>
+                    
+
+    </div>
+</div>
+
+
+{% schema %}
+    {
+        "name": "Product: Vimeo Section",
+        "class": "global_product_desc",
+        "settings": [
+            {
+                "type": "html",
+                "label": "Mini Title",
+                "id": "minititle",
+                "default": "Make your mattress feel brand new instantly!"
+            },
+            {
+                "type": "color",
+                "label": "Mini Title Color",
+                "id": "mini-color",
+                "default": "#3954a3"
+            },
+            {
+                "type": "html",
+                "label": "Title",
+                "id": "title",
+                "default": "The Best Selling Mattress Topper"
+            },
+            {
+                "type": "html",
+                "label": "As Seen On TV",
+                "id": "asseenontv",
+                "default": "As Seen On TV!"
+            },
+            {
+                "type": "html",
+                "id": "vimeo",
+                "label": "Vimeo Video URL",
+                "default": "https://youtu.be/l4zMRrVDPu0"
+            },
+            {
+                "type": "color",
+                "label": "Background Color",
+                "id": "bg-color",
+                "default": "#e9f5fc"
+            },
+            {
+              "type": "header",
+              "content": "Image"
+            },
+            {
+              "type": "image_picker",
+              "label": "Replace video",
+              "id": "replace-vid"
+            },
+            {
+                "type": "range",
+                "label": "Padding Top",
+                "id": "p-top",
+                "min": 1,
+                "max": 8,
+                "unit": "em",
+                "default": 3
+            },
+            {
+                "type": "range",
+                "label": "Padding Bottom",
+                "id": "p-bottom",
+                "min": 1,
+                "max": 8,
+                "unit": "em",
+                "default": 3
+            }
+
+        ],
+        "blocks":[
+            {
+                "type": "column",
+                "name": "column",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "label": "Icons",
+                        "id": "icon"
+                    },
+                    {
+                        "type": "html",
+                        "label": "Title",
+                        "id": "listtitle"
+                    }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name": "Product: Vimeo Section"   
+            }
+        ]
+    }
+{% endschema %}

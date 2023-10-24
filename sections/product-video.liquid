@@ -1,0 +1,120 @@
+<style>
+
+  .video_section.{{- section.id -}}{
+    background-color: {{ section.settings.bg-color }};
+    padding: clamp(1em, 3vw, {{ section.settings.p-top }}em) 0 clamp(1em, 3vw, {{ section.settings.p-bottom }}em);
+  }
+</style>
+
+
+<div class="video_section {{ section.id }} left">
+  <div class="page-width">
+
+    <div class="product_two_col_grid video_grid left_video {{ section.settings.media_placement }}">
+      <div class="content_ first">
+        {% if section.settings.image == nil %}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {% else %}
+          <img
+            src="{{- section.settings.image | img_url: 'master' }}"
+            alt="{{ section.settings.title | strip_html }}"
+            loading="lazy">
+        {% endif %}
+      </div>
+
+      <div class="content_ second">
+        {% if section.settings.icon != nil %}
+          <div class="iconsection">
+            <img src="{{ section.settings.icon | img_url: 'master' }}" alt="{% if section.settings.icon.tag %}{{ secttion.settings.icon.tag }}{% else %}{{ section.settings.title | strip_html }}{% endif %}" loading="lazy">
+          </div>
+        {% endif %}
+
+        <h2 class="p_title">{{- section.settings.title -}}</h2>
+        
+        {%- unless section.settings.content contains '<p>' -%}<p>{%- endunless -%}
+          {{ section.settings.content }}
+        {%- unless section.settings.content contains '<p>' -%}</p>{%- endunless -%}
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Product Video Section",
+    "class": "global_product_desc",
+    "settings": [
+      {
+        "type": "select",
+        "label": "Media Placement",
+        "info": "By selecting this you can make the media placement to be left or right",
+        "id": "media_placement",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right_placement",
+            "label": "Right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "image_picker",
+        "label": "Image",
+        "id": "image"
+      },
+      {
+        "type": "html",
+        "label": "Title",
+        "id": "title",
+        "default": "Title Here"
+      },
+      {
+        "type": "html",
+        "label": "Content",
+        "id": "content",
+        "default": "The Best Selling Mattress Topper"
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "bg-color",
+        "default": "#fafafa"
+      },
+      {
+        "type": "range",
+        "label": "Padding Top",
+        "id": "p-top",
+        "min": 1,
+        "max": 8,
+        "unit": "em",
+        "default": 3
+      }, {
+        "type": "range",
+        "label": "Padding Bottom",
+        "id": "p-bottom",
+        "min": 1,
+        "max": 8,
+        "unit": "em",
+        "default": 3
+      }
+    ],
+    "presets": [
+      {
+        "category": "Title",
+        "name": "Product: Video Section"
+      }
+    ]
+  }
+{% endschema %}

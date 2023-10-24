@@ -1,0 +1,38 @@
+table {
+	 width: 100%;
+	 margin: auto;
+	 text-transform: uppercase;
+	 border-collapse: collapse;
+}
+ table tr td, table tr th {
+	 padding: 16px clamp(5px, 1vw, 10px);
+	 border: 1px solid #eee;
+	 min-width: 70px;
+}
+ table thead tr th {
+	 text-transform: uppercase;
+}
+ table th, table tr:first-child {
+	 padding-bottom: 7px;
+	 font-weight: 500;
+	 font-size: clamp(11px, 2vmin, 14px);
+}
+ table td {
+	 font-size: clamp(11px, 1vmin, 13px);
+}
+ table td strong {
+	 font-weight: 500;
+}
+ table > :not(thead) tr:first-child td {
+	 font-size: clamp(11px, 2vmin, 13px);
+}
+ table > :not(thead) tr td {
+	 font-weight: 400;
+}
+ table > :not(thead) tr td:first-child {
+	 font-weight: 500;
+}
+
+img{
+  border: none!important;
+}

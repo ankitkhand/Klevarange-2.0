@@ -1,0 +1,19 @@
+{%- unless product.tags contains 'hide-leaves-warehouse' -%}
+    <div class="leave_warehouse">
+      <p class="instock" style="{%- if newSelectedVariant.inventory_quantity <= 0 and newSelectedVariant.inventory_policy == 'deny' -%}display:none;{% endif %}">In Stock.</p>
+      <img srcset="
+        https://cdn.shopify.com/s/files/1/1506/1208/files/klevarange_shipping_details_in_product_page_120x.png?v=1655871355 120w,
+        https://cdn.shopify.com/s/files/1/1506/1208/files/klevarange_shipping_details_in_product_page_46x.png?v=1655871355 46w"
+        sizes="
+        (max-width: 600px) 40px,
+        60px
+        "
+
+        width="60"
+        height="35"
+        loading="lazy"
+        alt="leave warehouse">
+      <p class="newptag">Leaves warehouse in <span class="days"> {% if product.tags contains '3-business-days' %}
+        3 business days {% else %}1 business day{% endif %}</span></p>
+    </div>
+  {%- endunless -%}

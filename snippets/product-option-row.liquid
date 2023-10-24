@@ -1,0 +1,142 @@
+<div class="product-option-row {{ option.position }} {% if option.name == 'Color' or option.name == 'Colour' %}color{% endif %} adjustmargin" id="{{ option.position }}">
+    {%- assign optionName = option.name | downcase -%}
+    {% assign selected = product.selected_variant[option_name] %}
+
+    <label for="{% if type == 'select' %}select-{{ option_name }}{% endif %}">
+        <h5 class="labelname">{{ option.name }}: {{ option.value }}        
+            {%- if optionName contains 'color' or optionName contains 'colour' -%}
+                <span class="availablecolor" {% if selectedOptionName contains 'bamboo' or selectedOptionName contains 'weave' %}style="display:initial;"{% else %}style="display:none;"{% endif %}>
+                    <span class="optionColorName">
+                        {% if selectedOptionName contains 'bamboo' %}
+                            Bamboo
+                        {% elsif selectedOptionName contains 'weave' %}
+                            Weave
+                        
+                        {% endif %}
+                    </span> 
+                    Only available in white
+                </span>     
+                
+                <span class="cottonColor" style="{% if selectedOptionName contains 'cotton' %}display:initial;{% else %}display: none;{% endif %}">
+                    {{ selected }}
+                </span>
+            {%- endif -%}
+            
+        </h5>  
+    </label>
+    <div class="options-values {% if type != 'select' %}color{% endif %}">
+        {% if type == 'select' %}
+            <select name="{{ option_name }}" class="select variant-option select__select">
+                <!-- <option value="placeholder" disabled selected>PLEASE SELECT YOUR SIZE</option> -->
+                {% for value in option.values %}
+                    {% unless value contains '100% off' %}
+                        <option value="{{ value }}" {%- if value contains 'please select' -%}style="text-decoration: line-through;"{%- endif -%}  {% if value == selected %}selected{% endif %}>
+                            {{ value }}
+                        </option>
+                    {% endunless %}
+                {% endfor %}
+            </select>
+        {% else %}
+            {% if optionName == 'color' or optionName == 'colour' %}
+
+                {%- liquid
+                    assign variants_available_arr = product.variants | map: 'available'
+                    assign variants_option1_arr = product.variants | map: 'option1'
+                    assign variants_option2_arr = product.variants | map: 'option2'
+                    assign variants_option3_arr = product.variants | map: 'option3'
+                  -%}
+
+                <div class="color_divs">
+                    {% for value in option.values %}
+
+                        {%- liquid
+                            assign option_disabled = true
+                        
+                            for option1_name in variants_option1_arr
+                              case option.position
+                                when 1
+                                  if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+                                    assign option_disabled = false
+                                  endif
+                                when 2
+                                  if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+                                    assign option_disabled = false
+                                  endif
+                                when 3
+                                  if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+                                    assign option_disabled = false
+                                  endif
+                              endcase
+                            endfor
+                        -%}
+
+                        {% assign radio_id = 'option-' | append: option_name | append: '-' | append: value | handleize %}
+
+                        <div class="inside_color_div {% if option_disabled %}disabled{% endif %} {{ radio_id | remove: "option-option3-"  }} pos_relative" data-color-value="{{ value | escape }}">
+                            {% assign radio_id = 'option-' | append: option_name | append: '-' | append: value | handleize %}
+
+                            <label for="{{ radio_id }}" class="pos_relative">
+                                <div class="inner_radius">
+                                    <input style="width: 30px; height: 30px;"  id="{{ radio_id }}" type="radio" name="{{option_name}}" value="{{ value }}" {% if option.selected_value == value %}checked{% endif %} >
+                                    
+                                </div>
+                                {% assign optionValue = value | downcase %}
+                                <span class="color_radius {{ optionValue }}" 
+                                    style="background: {%- if optionValue contains 'navy' -%}
+                                                          #000080
+                                                       {%- elsif optionValue contains 'light blue' -%}
+                                                          #acd8f1
+                                                       {%- elsif optionValue contains 'warm beige' -%}
+                                                          #bdac8e
+                                                       {%- elsif optionValue contains 'blush' -%}
+                                                          #e4d3cf
+                                                       {%- elsif optionValue contains 'rose' -%}
+                                                          #db9fa0
+                                                       {%- elsif optionValue contains 'champagne' -%}
+                                                          #e2d0c5
+                                                       {%- elsif optionValue contains 'white' -%}
+                                                          #fff
+                                                       {%- elsif optionValue contains 'silver' -%}
+                                                          #cecece
+                                                       {%- elsif optionValue contains 'light grey' -%}
+                                                          #767676
+                                                       {%- elsif optionValue contains 'charcoal' -%}
+                                                          #383838
+                                                       {%- else -%}
+                                                          #000
+                                                       {%- endif -%};"></span>
+                            </label> 
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="pill_div">
+                    {% for value in option.values %}
+                        <div class="inside_color_div {% if option.selected_value == value %}checked{% endif %}">
+                            {% assign radio_id = 'option-' | append: option_name | append: '-' | append: value | handleize %}
+
+                            <div class="pos_relative">
+                                <input id="{{ radio_id }}" type="radio" name="{{option_name}}" value="{{ value }}" {% if option.selected_value == value %}checked{% endif %}>
+                                <label for="{{ radio_id }}">
+                                    
+                                    {%- assign optionValue = value | downcase -%}
+
+                                    {% if product.id == 6807165698119 and optionValue contains 'bamboo' or optionValue contains 'weave' %}
+                                        <a href="https://supersleeperpro.com.au/products/bamboo-royal-deluxe-dream-sheets®-4pc-set-premium-flat-sheet-fitted-sheet-pillowcases-2">{{ value }}</a>
+                                    {% elsif product.id == 6809150521415 and optionValue contains 'cotton' %}
+                                        <a href="https://supersleeperpro.com.au/products/royal-deluxe-dream-sheets-4pc-set-cotton">{{ value }}</a>
+                                    {% else %}        
+                                        {{ value }}        
+                                    {% endif %}
+                                </label> 
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+

@@ -1,0 +1,232 @@
+<style>
+
+  .main-click-frenzy{
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .js-sec{
+    min-width: 21px;
+  }
+    .product .product_countdown.padding {
+      position: sticky;
+      top: 0;
+      transition: 0.1s all;
+      height: clamp(34px, 3vw, 50px);
+      z-index: 3;
+    }
+
+  .inlineFlex{
+    display: flex;
+    align-items: center;
+  }
+
+  img.click_frenzy{
+    max-width: 160px;
+    width: 100%;
+  }
+
+  .inlineFlex h6{
+        font-size: 12px;
+    text-transform: uppercase;
+    align-self: end;
+    line-height: 1.9;
+    color: yellow;
+    margin: 0;
+  }
+
+    .js-sec, .js-min, .js-hour{
+        font-size: 16px;
+      font-weight: 700;
+    }
+
+    .bf_timer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        text-align: center;
+    }
+
+    .werd .inlineblock{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+        width: max-content;
+    }
+
+    .werd span.text{
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .collection_breadcrumb.clickfrenzy{
+        margin-bottom: 0;
+    }
+
+    img.clickfrenzy{
+        max-width: 50px;
+        width: 100%;
+    }
+  
+    body.scroll-up .product_countdown.padding {
+      top: 6.6em !important;
+    }
+  
+    @media(max-width: 991px) {
+      body.scroll-up .product_countdown.padding {
+        top: 4.2em !important;
+      }
+    }
+  
+    @media(max-width: 720px) {
+      body.scroll-up .product_countdown.padding {
+        top: 6.2em !important;
+      }
+    }
+  
+    @media(max-width: 676px) {
+      body.scroll-up .product_countdown.padding {
+        top: 7.2em !important;
+      }
+    }
+  
+    .product .product_countdown.padding {
+      padding: 0;
+    }
+  
+    .text-scroller {
+      display: inline-flex;
+      width: 100%;
+      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      background: purple;
+      padding: 0 0 2px;
+      margin: 0 0 1.5em;
+    }
+  
+    .scroller-left {
+      left: 100%;
+    }
+  
+    .werd {
+      padding-left: clamp(0.8rem, 17vw, 4rem);
+      line-height: 1.2;
+      white-space: nowrap;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      -webkit-animation-timing-function: linear;
+      animation-timing-function: linear;
+      -webkit-animation-name: scroller;
+      animation-name: scroller;
+      -webkit-animation-duration: 7s;
+      animation-duration: 7s;
+      font-size: 20px;
+      color: #333;
+      width: max-content;
+    }
+  
+    .werd h3 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.8rem, 17vw, 4rem);
+      font-size: clamp(13px, 2vw, 18px);
+      color: #fff900;
+      margin: 0;
+    }
+  
+    .text-scroller .col_white {
+      color: #fff;
+      font-weight: 600;
+    }
+  
+    .text-scroller svg {
+      width: clamp(40px, 2vw, 50px) !important;
+    }
+  
+    @keyframes scroller {
+      0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+      }
+  
+      100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+      }
+    }
+  
+    @media(max-width: 680px) {
+      .text-scroller .hide_mobile {
+        display: none;
+      }
+    }
+  </style>
+  
+   
+  <div class="main-click-frenzy">
+    <div class="text-scroller">
+      {%- for i in (1..10) -%}
+        <div class="scroller-left">
+          <div class="werd">
+            <h3>
+                <span class="inlineblock">
+                    <img class="clickfrenzy" src="https://cdn.shopify.com/s/files/1/1506/1208/files/CF_Mayhem_Alternate_Logo.png?v=1683686740" alt="klevarange - click frenzy">
+                    <span class="text">
+                      ENDS IN:
+                    </span>
+                    <div class="bf_timer">
+                        <div class="inlineFlex">
+                          <span class="js-hour">--</span>
+                          <h6>hrs</h6>
+                        </div>
+                        <div class="inlineFlex">
+                          <span class="js-min">--</span>
+                          <h6>min</h6>
+                        </div>
+                        <div class="inlineFlex">
+                          <span class="js-sec">--</span>
+                          <h6>sec</h6>
+                        </div>
+                    </div>
+                </span>
+            </h3>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+<script>
+  const timerElements = document.querySelectorAll('.bf_timer');
+
+  function updateTimers() {
+    const now = new Date();
+    const endTime = new Date('May 21, 2023 23:59:00');
+    const totalMilliseconds = endTime - now;
+    const remainingHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
+    const remainingMinutes = Math.floor(totalMilliseconds / (1000 * 60)) % 60;
+    const remainingSeconds = Math.floor(totalMilliseconds / 1000) % 60;
+
+    timerElements.forEach(timerElement => {
+      const hourElement = timerElement.querySelector('.js-hour');
+      const minElement = timerElement.querySelector('.js-min');
+      const secElement = timerElement.querySelector('.js-sec');
+
+      hourElement.textContent = remainingHours < 10 ? "0" + remainingHours : remainingHours;
+      minElement.textContent = remainingMinutes < 10 ? "0" + remainingMinutes : remainingMinutes;
+      secElement.textContent = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
+    });
+  }
+
+  setInterval(updateTimers, 1000);
+</script>
+  
+  

@@ -1,0 +1,147 @@
+<link rel="stylesheet" href="{{ 'flickity.min.css' | asset_url }}">
+<script src="{{ 'flickity.pkgd.min.js' | asset_url }}"></script>
+
+
+{%- assign dataScale = 1.3 -%}
+{% comment %} {{ 'drift-basic.css' | asset_url | stylesheet_tag }} {% endcomment %}
+
+<!-- to change the product featured image based on the product tags -->
+{%- assign newProductImage = product.selected_or_first_available_variant.featured_image | default: product.featured_image | img_url: '900x' -%}
+ 
+<div class="sticky">
+    <div class="product-slider-img">
+      <div class="nav-img">
+        <div class="slider-nav">
+              
+            {% if product.images != null %}
+              <div class="single-nav-img pos_relative">
+
+                <div class="carousel product__image-slider" role="document" aria-label="{{ 'products.modal.label' | t }}" tabindex="0">
+                  {%- for media in product.media -%}
+                    <div data-scale="{{ dataScale }}" class="carousel-cell img_producto_container" {% if forloop.index > 1 %}style="display:none;"{% endif %}>
+                      {% if media.media_type == "video" %}
+                        {{ media | media_tag: image_size: "720x", autoplay: true, loop: loop, controls: true, preload: "none", autoplay: true, height: "100%", width: "100%" }}
+                      {% else %}
+                        <img class="zoomimg img_producto"
+                            data-zoom="{{ media | img_url: "master" }}"
+                            {% if forloop.index == 1 %}
+                              src="{{ media | img_url: 'master'}}" 
+                            {% else %}
+                              data-flickity-lazyload-srcset="
+                              {{ media | img_url: 'master' }} 1440w,
+                              {{ media | img_url: '1080x' }} 1080w,
+                              {{ media | img_url: '720x' }} 767w,
+                              {{ media | img_url: '480x' }} 480w"
+                            {% endif %}
+                            sizes="(min-width: 480px) 1440px, 1080px, 767px, 480px"
+                            {% unless forloop.index == 1 %}
+                              data-flickity-lazyload-src="{{ media | img_url: 'master' }}"  
+                            {% endunless %}
+                            
+                            alt="{{ media.alt | escape }}"
+                            border="0"
+                            data-media-id="{{ media.id }}" />
+                      {% endif %}
+
+                      <a class="fslightbox" data-fslightbox="gallery" href="{{ media | img_url: 'master' }}">
+
+                      </a>
+                    </div>
+                  {%- endfor -%}
+                </div>
+
+                  <svg
+                      width="1.8em"
+                      height="1.8em"
+                      viewBox="0 0 16 16"
+                      class="customimagezoom bi bi-arrows-fullscreen"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707zm0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707zm-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707z"></path>
+                  </svg>
+              </div>
+                {% if product.images.size > 1 %}
+                  <div class="carousel product__image-thumbnail">
+                    {%- for media in product.media -%}
+                    <div class="carousel-cell">
+                      <img data-flickity-bg-lazyload="
+                                                          {{ media | img_url: '1440x' }} 1440w,
+                                                          {{ media | img_url: '1080x' }} 1080w,
+                                                          {{ media | img_url: '720x' }} 767w,
+                                                          {{ media | img_url: '480x' }} 480w"
+                          sizes="(min-width: 480px) 1440px, 1080px, 767px, 480px"
+                          data-flickity-lazyload-src="{{ media | img_url: '200x' }}"
+                          border="0"
+                          data-media-id="{{ media_id }}" />
+                    </div>
+                    {%- endfor -%}
+                    
+                  </div>
+                {% endif %}
+              {% else %}
+              {{ 'product-1' | placeholder_svg_tag }}
+            {% endif %} 
+
+        
+
+        </div>
+      </div>
+
+    </div>
+
+
+</div>
+
+<div>
+  <div class="product-action {% unless product.selected_or_first_available_variant.compare_at_price %}hide_compare_at{% endunless %}">
+    {% include 'add-to-cart-form-button' %}    
+
+    <!-- compact product description -->
+    {% comment %} {% section 'compact_product_descriptions' %} {% endcomment %}
+    <!-- end of compact product description -->
+
+  </div>
+</div>
+
+{% comment %} To get the current variant index {% endcomment %}
+{% assign imageIndex = 0 %}
+{% if product.selected_variant.featured_image %}
+  {% for image in product.images %}
+    {% if image.id == product.selected_variant.featured_image.id %}
+      {% assign imageIndex = forloop.index0 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<script defer="defer">
+  var elem = document.querySelector('.slider-nav .carousel.product__image-slider');
+  var flkty = new Flickity( elem, {
+    initialIndex: {{imageIndex}},
+    imagesLoaded: true,
+    lazyLoad: 8,
+    draggable: false,
+    touchVerticalScroll: false,
+    wrapAround: true,
+    pageDots: false,
+    {% if product.images.size < 5 %}
+    prevNextButtons: false,
+    {% endif %}
+  });
+  
+  var elemThumbnail = document.querySelector('.carousel.product__image-thumbnail');
+  var flktyB = new Flickity( elemThumbnail, {
+    asNavFor: '.carousel.product__image-slider',
+    contain: true,
+    imagesLoaded: true,
+    lazyLoad: 8,
+    pageDots: false,
+    prevNextButtons: false
+  });
+</script>
+
+
+
+{% comment %} image pop up gallery {% endcomment %}
+{{ 'fslightbox.js' | asset_url | script_tag }}
+{% comment %} zoom zoom on hover {% endcomment %}

@@ -1,0 +1,126 @@
+<div class="six_featured_collection">
+    <div class="page-width">
+        <h2 class="home_title">{{- section.settings.sectiontitle -}}</h2>
+        <div class="grid_col">
+            {% for block in section.blocks %}
+                <a href="{{- block.settings.url -}}" class="pos_relative child-{{- forloop.index -}}">
+                   <div class="pos_relative imgsection">
+                        {%- if block.settings.img == nil -%}
+                            {{ 'lifestyle-1' | placeholder_svg_tag }}
+                        {% else %}
+                            <img srcset="
+                                {{ block.settings.img | img_url: '160x' }} 160w,
+                                {{ block.settings.img | img_url: '168x' }} 168w,
+                                {{ block.settings.img | img_url: '689x' }} 689w,
+                                "
+                                sizes="(max-width: 520px) 160w,(max-width: 1024px) 168px, 689px)"
+                                alt="{% if block.settings.image.alt %}{{ block.settings.image.alt }}{% else %}Super Sleeper Pro - {{ block.settings.title }} {% endif %}" loading="lazy" class="thumb-img">
+                        {%- endif -%}
+
+                        <div class="content">
+                            <p class="pos_relative">
+                                <span class="pos_relative">
+                                    {{- block.settings.view -}}
+                                </span>
+    
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                    <svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <title>8EB0409D-A75A-4EB1-A2DC-0A3F9DB9E578</title>
+                                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g id="SSP_Home_8_DT" transform="translate(-215.000000, -1694.000000)" fill="#FFFFFF">
+                                                <g id="Group-Copy-5" transform="translate(108.000000, 1679.000000)">
+                                                    <g id="Group-23" transform="translate(18.000000, 11.000000)">
+                                                        <g id="icons/20/arrowright" transform="translate(89.000000, 4.000000)">
+                                                            <path d="M8.48018717,5.27855544 L3.77959599,1.17170653 L3.77966068,1.17170653 C3.72338275,1.1223355 3.65047846,1.09673223 3.57615331,1.10033452 C3.50176193,1.10387044 3.43157515,1.13628202 3.38014769,1.19082601 C3.32878481,1.24530461 3.30006458,1.31778966 3.3,1.39315117 L3.3,9.60684899 C3.30006468,9.68221553 3.32878646,9.75470058 3.38014769,9.80917416 C3.43157515,9.86371814 3.50176193,9.8961304 3.57615331,9.89966564 C3.65048012,9.90326693 3.72338275,9.87766466 3.77966068,9.82829364 L8.48025185,5.72144473 L8.48018717,5.72144473 C8.54358098,5.66578771 8.58,5.58498671 8.58,5.49999338 C8.58,5.41500004 8.54358098,5.33420073 8.48018717,5.27854203 L8.48018717,5.27855544 Z" id="Path"></path>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <h3>{{- block.settings.mini-title }} <span>{{ block.settings.title -}}</span></h3> 
+                    
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+   "name": "Six Featured Collection",
+   "max_blocks": 5,
+   "settings": [
+        {
+            "type": "html",
+            "label": "Title",
+            "id": "sectiontitle",
+            "default": "Shop Best Selling Sleep Range"
+        }
+    ],
+   "blocks": [
+      {
+        "name": "Column",
+        "type": "collection",
+        "settings": [
+            {
+                "type": "html",
+                "label": "Mini Title",
+                "id": "mini-title",
+                "default": "Mini Title"
+           },
+           {
+                "type": "html",
+                "label": "Title",
+                "id": "title",
+                "default": "Title"
+            },
+            {
+                "type": "image_picker",
+                "label": "Image",
+                "id": "img"
+            },
+            {
+                "type": "html",
+                "label": "Button Name",
+                "id": "view",
+                "default": "Shop Now"
+            },
+            {
+                "type": "url",
+                "label": "URL",
+                "id": "url"
+            }
+        ]
+      }
+    ],
+   "presets": [
+       {
+           "category": "Column",
+           "name": "Six Featured Collection",
+           "blocks": [
+                {
+                   "type": "collection"
+                },
+                {
+                    "type": "collection"
+                },
+                {
+                    "type": "collection"
+                },
+                {
+                    "type": "collection"
+                },
+                {
+                    "type": "collection"
+                }
+           ]
+       }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,36 @@
+{% comment %} <script
+  async
+  src="https://api.revy.io/upsell.js?shop=supersleeperpro.myshopify.com"
+  type="text/javascript"></script>
+
+<script>
+  window.revyUpsellDataLayer = window.revyUpsellDataLayer || [];
+
+  window.revyUpsellDataLayer.push({
+    onNoneOfferCallbacks: function() {
+      window.Shopify.ajaxify.onCartUpdated();
+
+// window.Shopify.ajaxify.openCart();
+    }
+  });
+  window.revyUpsellDataLayer.push({
+    onShowPopupCallbacks: function() {
+
+// window.Shopify.ajaxify.openCart();
+      window.Shopify.ajaxify.onCartUpdated();
+    }
+  });
+  window.revyUpsellDataLayer.push({
+    onAddToCartCallbacks: function() {
+      window.Shopify.ajaxify.onCartUpdated();
+    }
+  });
+
+  window.revyUpsellDataLayer.push({
+    checkTargetOnCart: function() {
+      window.Shopify.ajaxify.onCartUpdated();
+
+// window.RevyUpsell.api.onLineRemoved();
+    }
+  });
+</script> {% endcomment %}

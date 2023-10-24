@@ -1,0 +1,194 @@
+{% style %}
+    .product_extralayer.{{ section.id }}{
+        background-color: {{ section.settings.bg-color }};
+        margin: clamp(1em, 4vmin, {{ section.settings.p-top }}em) 0 clamp(1em, 4vmin, {{ section.settings.p-bottom }}em);
+    }
+
+    .product_extralayer.{{ section.id }} .grid_extralayer{
+        padding-top:  clamp(1em, 3vw, {{- section.settings.tp-bottom -}}em);
+    }
+
+  .product_extralayer.{{ section.id }} .pcontent p{
+    color: {{ section.settings.text_color }};
+    margin-bottom: 0;
+  }
+{% endstyle %}
+
+
+<div class="product_extralayer {{ section.id }}">
+    <div class="page-width">
+           
+        <div class="pos_relative">
+            <h2 class="p_title text_align_center">
+                {% assign titleContent = section.settings.title | remove: '<p>' | remove: '</p>' %}
+                {{ titleContent }}
+            </h2>
+
+            {%- if section.settings.line_img != blank -%}
+                <img class="img_align_center lineimg" src="{{ section.settings.line_img | img_url: 'master' }}" loading="lazy" alt="{{ section.settings.title }}">
+            {%- endif -%}
+
+            <div class="text_align_center pcontent">
+                {{ section.settings.content }}
+            </div>
+        </div>
+
+        <div class="grid_extralayer mobile_grid">
+            <div class="gridcontent mobile_grid">
+                {%- for block in section.blocks -%}
+                    <div class="inlinecontent mobile_align_center">
+                        {%- if block.settings.layerimg == blank -%}
+                            {%- assign emptyImg = 'product-' | append: forloop.index -%}
+                            <span class="emptysvg">
+                                {{ emptyImg | placeholder_svg_tag | class: 'emptysvg' }}
+                            </span>
+                        {%- else -%}
+                            <img src="{{- block.settings.layerimg | img_url: 'master' -}}" loading="lazy" alt="{{ block.settings.layertitle }}">
+                        {%- endif -%}
+
+                        <div>
+                            <h3>{{- block.settings.layertitle -}}</h3>
+                            <p>{{- block.settings.layercontent -}}</p>
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </div>
+
+            <div class="mobile_order">
+                {%- if section.settings.dk_img == blank -%}
+                    <span class="emptysvg">
+                        {{ 'lifestyle-1' | placeholder_svg_tag }}
+                    </span>
+                {%- else -%}
+                    <div class="{% if section.settings.mb_img != blank %}hasmobileimg{% endif %}">
+                        <img class="{% if section.settings.mb_img != blank %}visible_lg{% endif %}" src="{{- section.settings.dk_img | img_url: 'master' -}}" loading="lazy" alt="{{ section.settings.dk_img.alt }}">
+        
+                        {%- if section.settings.mb_img != blank -%}
+                            <img class="visible_mb" src="{{- section.settings.mb_img | img_url: 'master' -}}" loading="lazy" alt="{{ section.settings.dk_img.alt }}">
+                        {%- endif -%}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>     
+    </div>
+</div>
+
+ 
+{% schema %}
+    {
+        "name": "Product: Extra Layer",
+        "class": "global_product_desc",
+        "settings": [
+            {
+                "type": "color",
+                "label": "Background Color",
+                "id": "bg-color",
+                "default": "#fff"
+            },
+            {
+                "type": "range",
+                "label": "Margin Top",
+                "id": "p-top",
+                "min": 1,
+                "max": 8,
+                "unit": "em",
+                "default": 1
+            },
+            {
+                "type": "range",
+                "label": "Margin Bottom",
+                "id": "p-bottom",
+                "min": 1,
+                "max": 8,
+                "unit": "em",
+                "default": 1
+            },
+            {
+                "type": "richtext",
+                "label": "Title",
+                "id": "title"
+            },
+            {
+                "type": "range",
+                "label": "Padding Top",
+                "id": "tp-bottom",
+                "min": 1,
+                "max": 8,
+                "unit": "em",
+                "default": 1
+            },
+            {
+                "type": "image_picker",
+                "label": "Line Image",
+                "id": "line_img"
+            },
+            {
+                "type": "richtext",
+                "label": "Content",
+                "id": "content"
+            },
+            {
+                "type": "color",
+                "label": "Text Color",
+                "id": "text_color",
+                "default": "#48769f"
+            },
+            {
+                "type": "image_picker",
+                "label": "Desktop Image",
+                "id": "dk_img"
+            },
+            {
+                "type": "image_picker",
+                "label": "Mobile Image",
+                "id": "mb_img"
+            }
+
+        ],
+        "max_blocks": 4,
+        "blocks":[
+            {
+                "type": "column",
+                "name": "Column",
+                "settings": [
+                    {
+                        "type": "html",
+                        "label": "Title",
+                        "id": "layertitle",
+                        "default": "Title"
+                    },
+                    {
+                        "type": "html",
+                        "label": "Content",
+                        "id": "layercontent",
+                        "default": "Content"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "layerimg",
+                        "label": "Image"
+                    }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name": "Product Extra Layer",
+                "blocks":[
+                    {
+                        "type": "column"
+                    },
+                    {
+                        "type": "column"
+                    },
+                    {
+                        "type": "column"
+                    },
+                    {
+                        "type": "column"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

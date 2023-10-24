@@ -1,0 +1,20 @@
+{%- assign todayDate = "now" | date: "%a" | downcase -%}
+
+{%- case todayDate -%}
+    {%- when 'sun' -%}
+        Sunday
+    {%- when 'mon' -%}
+        Monday
+    {%- when 'tue' -%}
+        Tuesday 
+    {%- when 'wed' -%}
+        Wednesday
+    {%- when 'thu' -%}
+        Thursday
+    {%- when 'fri' -%}
+        Friday
+    {%- when 'sat' -%}
+        Saturday
+    {%- else -%}
+        Today's
+{%- endcase -%}

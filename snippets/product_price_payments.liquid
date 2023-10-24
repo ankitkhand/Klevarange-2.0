@@ -1,0 +1,77 @@
+
+
+
+<div id="display_product_price">
+    <div class="price_first_row">
+        <div class="price_tag">
+            
+            {% unless product.type == "FREE GIFT" or product.type == "UPSELL" %}
+                <div class="was_price">
+                    <h4 class="was">Was</h4>
+                    <h4 id="compareprice"> 
+                        <span class="js-old-price">{{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}</span>
+                        <span class="compare_price">
+
+                        </span> 
+                    </h4>
+                </div>
+            {% endunless %}
+            
+            <div>
+                <h4 class="now {{ mobileClass }} {% if product.tags contains 'click-frenzy' %}purple{% endif %}">{% if product.tags contains 'click-frenzy' %}Click Frenzy{% else %}{%- render 'product-price-dynamic-day' %}{% endif %} Special</h4>
+                <div class="price_diff">
+                    <h3 class="{% if product.selected_or_first_available_variant.compare_at_price %}color_red{% endif %}">
+                        <span class="js-price" data-default-price="{{ product.price | money_without_trailing_zeros }}">
+                            <!-- {{ current_variant.price | money_without_trailing_zeros }} -->
+                            {% assign variantPrice = product.selected_or_first_available_variant.price | money_without_trailing_zeros | split: '.' %}
+                                         
+                            <div class="newFormattedPrice">                            
+                                <div class="now smalldollar">                                    
+                                    <span class="dollar {% if product.tags contains 'click-frenzy' %}purple{% endif %}">$</span>                                        
+                                    <div class="formattedMainPrice {% if product.tags contains 'click-frenzy' %}purple{% endif %}">
+                                        {{ variantPrice[0] | remove: '$' }}
+                                    </div>
+                                </div>
+                                <span class="cents formattedCentsPrice {% if product.tags contains 'click-frenzy' %}purple{% endif %}" {% if variantPrice[1] == nil %}style="display: none;"{% endif %}>.{{ variantPrice[1] }}</span>
+                            </div>
+                        </span>
+                    </h3>
+                    
+                    {% unless product.type == "FREE GIFT" or product.type == "UPSELL" %}
+                        <div class="percentoff_cal {{ mobileClass }}" {%- if originalPrice < newPrice -%}style="display: none;"{%- endif -%}>
+                            <h6>(<span class="js-percent-off">{{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100 | divided_by: product.selected_or_first_available_variant.compare_at_price }}</span>% OFF) <br/>
+                                Save <span class="js-save">{{ product.selected_or_first_available_variant.compare_at_price | times: 1 | minus: product.selected_or_first_available_variant.price | times: 1 | money_without_trailing_zeros }}</span>
+                            </h6>
+                        </div>
+                    {% endunless %}
+                    
+                </div>
+    
+            </div>
+        </div>
+
+        <div class="earn_kleva_point">
+            <a href="#smile-home" alt="Kleva Rewards Klub" target="_parent" class="rewardpopup">
+                <span class="rewards">
+                    <div class="credit">
+                        <img src="https://cdn.shopify.com/s/files/1/0098/8915/3081/files/ssp-priority-club_18x.svg?v=3815459604146422222" width="18" height="18" alt="SSP rewards" class="klevarange_reward">
+                        <div class="reward_grid">
+                            <span class="reward_point">
+                                + YOU GET <span class="ssp_js_points">{{ product.selected_or_first_available_variant.price | divided_by: 100 | times: 5 }}</span> 
+                            </span>
+                
+                            <span class="reward_credit">
+                                Reward Points!
+                            </span>
+                        </div>
+
+                        <span class="icon">
+                            <img src="https://cdn.shopify.com/s/files/1/1506/1208/files/kleva_rewards_icon_f73e6c7c-9d30-460f-90ee-37fe2ede6734_12x.jpg?v=1645749266" width="12" height="auto" alt="ssp rewards icon">
+                        </span>
+                    </div>
+                </span>
+            </a>
+        </div>
+    </div>
+
+</div>

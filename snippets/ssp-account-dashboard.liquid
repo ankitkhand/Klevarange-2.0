@@ -1,0 +1,83 @@
+<style>
+    .customer_purchaseinfo {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin: clamp(1em, 2vw, 2em) 0 0;
+   }
+    @media (max-width: 640px) {
+        .customer_purchaseinfo {
+            grid-template-columns: 1fr;
+       }
+        .customer_purchaseinfo a.details {
+            padding: 1.5em 0;
+       }
+   }
+    .customer_purchaseinfo a {
+        box-shadow: 0 0 30px #d8d8d8;
+        border-radius: 5px;
+        padding: 1em;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+   }
+    .customer_purchaseinfo a h3 {
+        font-size: clamp(1.6rem, 2vmin, 2.4rem);
+   }
+    .customer_purchaseinfo div {
+        box-shadow: 0 0 30px #d8d8d8;
+        border-radius: 5px;
+        padding: 1em;
+   }
+    .customer_purchaseinfo div h5 {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.3;
+        margin: 0 0 1em;
+        color: #1b1919;
+   }
+    .customer_purchaseinfo div span {
+        font-size: clamp(1.5rem, 4vmin, 3rem);
+        font-weight: 600;
+        line-height: 1.3;
+   }
+    .customer_purchaseinfo div.point-balance {
+        color: #fff;
+        box-shadow: 0 0 30px #dab0ff;
+        background: linear-gradient(135deg, #6a18b1 0, #3e0a6b 100%);
+   }
+    .customer_purchaseinfo div.point-balance h5 {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.3;
+        margin: 0 0 1em;
+        color: #fff;
+   }
+    .customer_purchaseinfo div.point-balance span {
+        font-size: clamp(1.5rem, 4vmin, 3rem);
+        font-weight: 600;
+        line-height: 1.3;
+        color: #fff;
+   }
+      
+</style>
+
+<span class="dashboard_items">
+    <div class="customer_purchaseinfo">
+        <a href="/account/addresses" class="details">
+            <h3>My Details</h3>
+        </a>
+        <div class="point-balance">
+            <h5>Your points balance:</h5>
+            <span class="sweettooth-points-balance">(loading)</span>
+        </div>
+        <div class="kr-order-count">
+            <h5>Number of orders:</h5>
+            <span>{{ customer.orders_count }}</span>
+        </div>
+        <div class="kr-order-count">
+            <h5>Total amount spent:</h5>
+            <span>{{ customer.total_spent | money }}</span>
+        </div>
+    </div>
+</span>

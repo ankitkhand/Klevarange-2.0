@@ -1,0 +1,15 @@
+<div class="bottom-atc">
+  <div class="page-width">
+    <div class="batc_content">
+      <span class="hidemobile jumpsection">
+        <h4>{{ product.title }}</h4>
+        {% render 'custom-reviews' %}
+      </span>
+      <a class="batc_btn shiny_button" href="#redeemnow">
+        REDEEM OFFER
+      </a>
+    </div>
+  </div>
+</div>
+
+{{ 'bottom-atc.js' | asset_url | script_tag }}

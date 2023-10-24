@@ -1,0 +1,59 @@
+<div class="product-right-shipping">
+  <div class="grid">
+    <div class="tab">
+      <div class="heading active">Payment Options</div>
+    </div>
+    <div class="tab">
+      <div class="heading">Shipping Options</div>
+    </div>
+  </div>
+
+  <div class="contents active">
+    
+<div id="product-payment-information">
+    <div class="description">
+        <p>Full payment methods (no credit card surcharge):</p>
+        <ul class="kr-payment-icons">
+            <li><img src="https://cdn.shopify.com/s/files/1/1506/1208/files/New_Klevarange_Visa_42x.svg?v=1634181381" width="42" height="26.08"  alt="visa card"></li>
+            <li><img src="https://cdn.shopify.com/s/files/1/1506/1208/files/New_Klevarange_MasterCard_42x.svg?v=1634181381" width="42" height="26.08" alt="master card"></li>
+            <li><img src="https://cdn.shopify.com/s/files/1/1506/1208/files/New_Klevarange_AmericanExpress_42x.svg?v=1634181381" width="42" height="26.08" alt="american express"></li>
+            <li><img src="https://cdn.shopify.com/s/files/1/1506/1208/files/PayPal_42x.svg?v=1634181381" width="42" height="26.08" alt="paypal"></li>
+            <li><img src="https://cdn.shopify.com/s/files/1/1506/1208/files/New_Klevarange_GPay_42x.svg?v=1634181381" width="42" height="26.08" alt="google pay"></li>
+            <li><img src="https://cdn.shopify.com/s/files/1/1506/1208/files/ShopPay_42x.svg?v=1634181381" width="42" height="26.08" alt="shop pay"></li>
+        </ul>
+
+        <p>Interest Free Parts payment available:</p>
+        <ul>
+            <li><img src="https://cdn.shopify.com/s/files/1/1506/1208/files/New_Klevarange_AfterPay_42x.svg?v=1634179835" width="42" height="26.08" alt="klevarange afterpay"></li>
+            <li><img src="https://cdn.shopify.com/s/files/1/1506/1208/files/klevarange_new_Individual_ZipPay_Icon_42x.svg?v=1636002784" width="42" height="26.08" alt="klevarange zippay"></li>
+        </ul>
+    </div>
+  </div>
+    
+  </div>
+  <div class="contents">
+    {% include 'shipping-delivery' %}
+  </div>
+</div>
+
+<script>
+const headings = document.querySelectorAll('.product-right-shipping .heading');
+const contents = document.querySelectorAll('.product-right-shipping .contents');
+
+headings.forEach((heading) => {
+  heading.addEventListener('click', function() {
+    if (this.classList.contains('active')) {
+      return;
+    }
+
+    headings.forEach((h) => {
+      h.classList.toggle('active');
+    });
+    
+    contents.forEach((c) => {
+      c.classList.toggle('active');
+    });
+  });
+});
+
+</script>

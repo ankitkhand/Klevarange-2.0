@@ -1,0 +1,59 @@
+{% assign originalPrice = product.selected_or_first_available_variant.compare_at_price | times: 1 %}
+{% assign newPrice = product.selected_or_first_available_variant.price | times: 1 %}
+
+<div id="page-product">
+    <!-- Begin procut top -->
+    {% if product.tags contains 'click-frenzy' %}
+      {% render 'click-frenzy' %}
+    {% endif %}
+    <div class="page-width">
+
+      <div class="product_title_reviews visibletab mobiletitle">
+        <div class="product_displaytag">
+          {% unless product.type == "FREE GIFT" or product.type == "UPSELL" or product.tags contains 'bogof' %}
+            <div class="percentoff_cal" {%- if originalPrice < newPrice -%}style="display: none;"{%- endif -%}>
+                <div class="toppercentoff">
+                  <h6><span class="js-percent-off">{{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100 | divided_by: product.selected_or_first_available_variant.compare_at_price }}</span>% OFF</h6>
+                </div>
+            </div>
+          {% endunless %}
+
+          {% if product.tags contains 'bogof' %}
+            <div class="percentoff_cal ">
+                <div class="toppercentoff">
+                    <h6>2 for 1</h6>
+                </div>
+            </div>
+          {% endif %}
+  
+          {%- if product.tags contains 'popular-badge' -%}
+              <h6 class="popular">POPULAR</h6>
+          {%- endif -%}
+  
+          {%- if product.tags contains 'tv-special' or product.tags contains 'tv-deal' -%}
+              <h6 class="tvdeal">TV SPECIAL</h6>
+          {%- endif -%}
+
+          {%- if product.tags contains 'click-frenzy' -%}
+            <h6 class="click-frenzy">CLICK FRENZY EXCLUSIVE</h6>
+          {%- endif -%}
+        
+        </div>
+
+        {% include 'productTitleReviews' %}
+      </div>
+      
+      <div id="product-top">
+        {% include 'product-image-price-button' %}
+      </div>
+      <!-- End product top -->
+    </div>
+  
+    <!-- Begin product bottom section -->
+    {% comment %} <div class="{%- for tag in product.tags -%}{%- if tag contains 'full-width' -%}full{%- endif -%}{%- endfor -%}container">
+      {% include 'product_descriptions' %}
+    </div>
+  
+    {% include 'anime-subscribe' %} {% endcomment %}
+    
+  </div>

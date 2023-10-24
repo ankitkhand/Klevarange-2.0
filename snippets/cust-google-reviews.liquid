@@ -1,0 +1,55 @@
+<style>
+    .banner-aw-gr{
+        display: flex;
+        align-items: center;
+        position: absolute;
+        z-index: 3;
+        gap: 10px;
+        top: clamp(-3.5em, 2vw, -5em);
+        left: -5px;
+    }
+
+    .cust_google_reviews a{
+        display: flex;
+        align-items: center
+    }
+
+    img.australian-owned{
+        width: 80px;
+        height: auto;
+    }
+
+    @media (max-width: 600px){
+        img.australian-owned{
+            width: 58px;
+        }
+    }
+    
+</style>
+
+<div class="banner-aw-gr">
+    <img class="australian-owned" 
+        srcset="
+        https://cdn.shopify.com/s/files/1/0098/8915/3081/files/Australian-Owned-Certified_180x.png?v=1693880235 160w,
+        https://cdn.shopify.com/s/files/1/0098/8915/3081/files/Australian-Owned-Certified_116x.png?v=1693880235 116w
+        " 
+        width="80"
+        height="80"
+        sizes="(max-width: 600px) 58px, 80px"
+        alt="Australian Owned"
+    />
+
+    <div class="cust_google_reviews">
+        <a href="https://customerreviews.google.com/v/merchant?q=supersleeperpro.com.au&c=AU&v=19&hl=en">
+            <img class="google_reviews" srcset="
+                https://cdn.shopify.com/s/files/1/0098/8915/3081/files/super_sleeper_pro_-_google_review_260x.png?v=1683261414 260w,
+                https://cdn.shopify.com/s/files/1/0098/8915/3081/files/super_sleeper_pro_-_google_review_360x.png?v=1683261414 360w
+                "
+                width="130"
+                height="40.44"
+                sizes="(max-width: 749px) 130px, 180px"
+                alt="SSP - customer reviews"
+            />
+        </a>
+    </div>
+</div>

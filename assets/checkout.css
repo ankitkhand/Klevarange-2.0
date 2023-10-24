@@ -1,0 +1,226 @@
+.checkoutlogo_review{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.checkoutlogo_review img.desktop{
+	max-width: clamp(108px, 12vw, 119px);
+    position: relative;
+    right: 2em;
+}
+
+.checkoutlogo_review img.mobile{
+	max-width: clamp(84px, 7vw, 91px);
+}
+
+.content button#continue_button {
+	 box-shadow: 0 5px 5px #dfffc6;
+	 background: linear-gradient(135deg, #6ad903 0, #00a516 100%);
+	 font-size: clamp(1rem, 2vmin, 1.02rem);
+	 padding: 18px 22px;
+}
+ .sidebar button#checkout_submit {
+	 background: linear-gradient(135deg, #6ad903 0, #00a516 100%) !important;
+	 color: #fff;
+	 border: none;
+}
+ .breadcrumb__item.breadcrumb__item--current {
+	 color: #00a516;
+	 font-weight: 600;
+}
+ .breadcrumb__item.breadcrumb__item--completed a {
+	 color: #00a516;
+}
+ .breadcrumb__item {
+	 font-size: clamp(1rem, 2vmin, 1.38rem);
+}
+ .content a {
+	 color: #3954a5;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue {
+	 position: fixed;
+	 top: 0;
+	 left: 0;
+	 right: 0;
+	 bottom: 0;
+	 display: block !important;
+	 z-index: 16 !important;
+	 background: rgba(0, 0, 0, 0.4);
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue {
+	 display: grid;
+	 place-content: center;
+	 height: 100%;
+	 padding: 1em;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents {
+	 background: #fff;
+	 padding: 1em;
+	 background-color: #fefefe;
+	 border: 1px solid #888;
+	 border-radius: 10px;
+	 width: auto;
+	 max-width: 600px;
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	 text-align: center;
+	 position: relative;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents img.close_icon {
+	 position: absolute;
+	 top: 0;
+	 right: 0;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents .contents {
+	 border: 1px solid;
+	 color: #856404;
+	 background-color: #fff3cd;
+	 border-color: #ffeeba;
+	 padding: 0.75rem 1.25rem;
+	 margin-bottom: 1.5rem 1rem;
+	 border: 1px solid transparent;
+	 border-radius: 0.25rem;
+	 margin-top: 1em;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents .contents h1 {
+	 font-size: clamp(1rem, 3vmin, 1.12rem);
+	 font-weight: 400;
+	 margin: 0 0 10px;
+	 color: #856404;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents .contents h2 {
+	 font-size: clamp(1rem, 3vmin, 1.12rem);
+	 margin: 0;
+	 color: #856404;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents .confirmation_button {
+	 display: flex;
+	 justify-content: center;
+	 gap: 1em;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents h3 {
+	 width: fit-content;
+	 margin: 2em auto 0.5em;
+	 padding: 0.75rem 1.25rem;
+	 border-radius: 0.25rem;
+	 box-shadow: 0 5px 5px #dfffc6;
+	 color: #fff;
+	 background: #00a516;
+	 cursor: pointer;
+	 position: relative;
+	 min-width: 88px;
+	 margin: 1.4em 0 1.5em;
+}
+ .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents h3.close_icon {
+	 background: #ff6801;
+	 box-shadow: 0 5px 5px #ffd5b8;
+}
+ @media (max-width: 350px) {
+	 .newssp_checkout.confirmation_message .addressconfirmation_dialogue .pobox_inner_dialogue .pobox_inner_contents h3 {
+		 padding-left: 10px;
+		 padding-right: 10px;
+	}
+}
+ @keyframes spinner {
+	 to {
+		 transform: rotate(360deg);
+	}
+}
+ .spinner {
+	 opacity: 0;
+}
+ .spinner:before {
+	 content: '';
+	 box-sizing: border-box;
+	 position: absolute;
+	 top: 50%;
+	 right: 1em;
+	 width: 20px;
+	 height: 20px;
+	 margin-top: -10px;
+	 margin-left: -10px;
+	 border-radius: 50%;
+	 border: 2px solid transparent;
+	 border-top-color: #fff;
+	 animation: spinner 0.6s linear infinite;
+}
+ @media (max-width: 600px) {
+	 .confirmation_button .spinner {
+		 display: none;
+	}
+}
+
+body.pobox_message {
+	 position: relative;
+}
+ body.pobox_message .pobox_dialogue {
+	 position: fixed;
+	 top: 0;
+	 left: 0;
+	 right: 0;
+	 bottom: 0;
+	 display: block !important;
+	 z-index: 6 !important;
+	 background: rgba(0, 0, 0, 0.4);
+}
+ body.pobox_message .pobox_dialogue .pobox_inner_dialogue {
+	 display: grid;
+	 place-content: center;
+	 height: 100%;
+	 padding: 1em;
+}
+ body.pobox_message .pobox_dialogue .pobox_inner_dialogue .pobox_inner_contents {
+	 background: #fff;
+	 padding: 1em;
+	 background-color: #fefefe;
+	 border: 1px solid #888;
+	 border-radius: 10px;
+	 width: 80%;
+	 max-width: 600px;
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	 text-align: center;
+}
+ body.pobox_message .pobox_dialogue .pobox_inner_dialogue .pobox_inner_contents .contents {
+	 border: 1px solid;
+	 color: #856404;
+	 background-color: #fff3cd;
+	 border-color: #ffeeba;
+	 padding: 0.75rem 0.25rem;
+	 margin-bottom: 1.5rem 1rem;
+	 border: 1px solid transparent;
+	 border-radius: 0.25rem;
+}
+ body.pobox_message .pobox_dialogue .pobox_inner_dialogue .pobox_inner_contents .contents h1 {
+	 font-size: clamp(1rem, 3vmin, 1.12rem);
+	 font-weight: 400;
+	 margin: 0 0 10px;
+	 color: #856404;
+}
+ body.pobox_message .pobox_dialogue .pobox_inner_dialogue .pobox_inner_contents .contents h2 {
+	 font-size: clamp(1rem, 3vmin, 1.12rem);
+	 margin: 0;
+	 color: #856404;
+}
+ body.pobox_message .pobox_dialogue .pobox_inner_dialogue .pobox_inner_contents h3 {
+	 width: fit-content;
+	 margin: 2em auto 0.5em;
+	 padding: 0.75rem 1.25rem;
+	 border-radius: 0.25rem;
+	 box-shadow: 0 5px 5px #dfffc6;
+	 color: #fff;
+	 background: #00a516;
+	 cursor: pointer;
+}
+
+a.step__footer__continue-btn span.btn__content{
+  color: #fff;
+}
+
+@media (max-width: 999px){
+	.checkoutlogo_review img.googleimg.desktop{
+		display: none;
+	}
+}
+ 
+ 

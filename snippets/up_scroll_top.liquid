@@ -1,0 +1,76 @@
+<div class="globla_scrolltop">
+  <div class="page-width">
+    <div class="up_scroll_top" style="display: none;">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-chevron-up"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .up_scroll_top {
+    position: fixed;
+    bottom: 0;
+    right: 1em;
+    bottom: 0;
+    cursor: pointer;
+    z-index: 2;
+    padding: 1px 1px 8em;
+  }
+
+  .up_scroll_top svg {
+    background: #000;
+    fill: #fff;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  @media(max-width: 680px) {
+    .globla_scrolltop {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const arrowButtonTag = document.querySelector('.up_scroll_top');
+
+  window.addEventListener('scroll', function() {
+    const currentTopPos = window.pageYOffset;
+
+    if (currentTopPos > 700) {
+      arrowButtonTag.style.display = 'block';
+    } else {
+      arrowButtonTag.style.display = 'none';
+    }
+  });
+
+  arrowButtonTag.addEventListener('click', function(event) {
+    event.preventDefault();
+    let bottom = document.documentElement.scrollHeight - window.innerHeight;
+    let duration = getDuration(bottom);
+
+    window.scrollTo({top: 0, behavior: 'smooth'});
+
+// smooth scroll
+    function getDuration(target) {
+      let currentTop = window.pageYOffset,
+        rate = 0.15,
+        distance;
+
+      distance = Math.abs(currentTop - target);
+      return distance * rate;
+    }
+  });
+</script>

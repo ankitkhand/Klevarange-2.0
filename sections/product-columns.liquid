@@ -1,0 +1,192 @@
+{% style %}
+    .product_columns.{{ section.id }}{
+        background-color: {{ section.settings.bg-color }};
+        padding: clamp(1em, 8vw, {{ section.settings.p-top }}em) 0 clamp(1em, 8vw, {{ section.settings.p-bottom }}em);
+        {% if section.settings.p-top == 0 %}
+            padding-top: 0;
+        {% endif %}
+          {% if section.settings.p-bottom == 0 %}
+            padding-bottom: 0;
+        {% endif %}
+    }
+
+  .product_columns .page-width{
+    padding-inline: 0;
+    max-width: 1366px;
+  }
+
+    .product_columns.{{ section.id }} .pc_content.inline{
+        display: grid;
+        grid-auto-flow: column;
+        gap: 1em;
+    }
+
+    .product_columns.{{ section.id }} .pc_content.block{
+        display: grid;
+        grid-auto-flow: row;
+        gap: 1em;
+    }
+
+    @media (max-width: 767px){
+        .product_columns.{{ section.id }} .pc_content.inline{
+            grid-auto-flow: row;
+        }
+    }
+{% endstyle %}
+
+
+<div class="product_columns {{ section.id }}">
+    <div class="page-width">
+
+        <div class="pc_content {{ section.settings.column_display }}">
+            {%- for block in section.blocks -%}
+                <div style="text-align: {{ block.settings.text_alignment }}">
+                    {% if block.settings.title != nil %}
+                        <h2 class="p_title" style="padding-bottom: {{- block.settings.tp-bottom -}}em;">{{ block.settings.title | remove: '<p>' | remove: '</p>' }}</h2>
+                    {% endif %}
+
+                    {%- if block.settings.dk_img == nil -%}
+                        {%- assign emptyImg = 'product-' | append: forloop.index -%}
+                        <span class="emptysvg">
+                            {{ emptyImg | placeholder_svg_tag | class: 'emptysvg' }}
+                        </span>
+                    {%- else -%}
+                        <div class="{% if block.settings.mb_img != nil %}hasmobileimg{% endif %}">
+                            <img class="{% if block.settings.mb_img != nil %}visible_lg{% endif %}" src="{{- block.settings.dk_img | img_url: 'master' -}}" loading="lazy" alt="{{ block.settings.dk_img.alt }}">
+
+                            {%- if block.settings.mb_img != nil -%}
+                                <img class="visible_mb" src="{{- block.settings.mb_img | img_url: 'master' -}}" loading="lazy" alt="{{ block.settings.dk_img.alt }}">
+                            {%- endif -%}
+
+                        </div>
+                    {%- endif -%}
+                </div>
+            {%- endfor -%}
+        </div>                    
+
+    </div>
+</div>
+
+
+{% schema %}
+    {
+        "name": "Product Columns",
+        "class": "global_product_desc",
+        "settings": [
+            {
+                "type": "select",
+                "label": "Display",
+                "info": "By selecting this, it will display columns inline or block",
+                "id": "column_display",
+                "options": [
+                  {
+                    "value": "inline",
+                    "label": "Inline"
+                  },
+                  {
+                    "value": "block",
+                    "label": "Block"
+                  }
+                ],
+                "default": "inline"
+            },
+            {
+                "type": "color",
+                "label": "Background Color",
+                "id": "bg-color",
+                "default": "#fff"
+            },
+            {
+                "type": "range",
+                "label": "Padding Top",
+                "id": "p-top",
+                "min": 0,
+                "step": 0.5,
+                "max": 8,
+                "unit": "em",
+                "default": 1
+            },
+            {
+                "type": "range",
+                "label": "Padding Bottom",
+                "id": "p-bottom",
+                "min": 0,
+                "step": 0.5,
+                "max": 8,
+                "unit": "em",
+                "default": 1
+            }
+
+        ],
+        "max_blocks": 3,
+        "blocks":[
+            {
+                "type": "Column",
+                "name": "Column",
+                "settings": [
+                    {
+                        "type": "select",
+                        "label": "Text Alignment",
+                        "id": "text_alignment",
+                        "options": [
+                          {
+                            "value": "left",
+                            "label": "Left"
+                          },
+                          {
+                            "value": "center",
+                            "label": "Center"
+                          },
+                          {
+                            "value": "right",
+                            "label": "Right"
+                          }
+                        ],
+                        "default": "left"
+                    },
+                    {
+                        "type": "richtext",
+                        "label": "Title",
+                        "id": "title"
+                    },
+                    {
+                        "type": "range",
+                        "label": "Title Padding Bottom",
+                        "id": "tp-bottom",
+                        "min": 0,
+                        "max": 8,
+                        "step": 0.5,
+                        "unit": "em",
+                        "default": 1
+                    },
+                    {
+                        "type": "image_picker",
+                        "label": "Desktop Image",
+                        "id": "dk_img"
+                    },
+                    {
+                        "type": "image_picker",
+                        "label": "Mobile Image",
+                        "id": "mb_img"
+                    }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name": "Product Image Columns",
+                "blocks":[
+                    {
+                        "type": "Column"
+                    },
+                    {
+                        "type": "Column"
+                    },
+                    {
+                        "type": "Column"
+                    }
+                ]   
+            }
+        ]
+    }
+{% endschema %}

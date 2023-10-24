@@ -1,0 +1,116 @@
+
+    section.banner {
+        position: relative;
+    }
+
+
+#contact_page section.banner img {
+    object-fit: cover;
+    max-height: 203px;
+    width: 100%;
+    object-position: top;
+}
+@media (max-width: 600px) {
+    #contact_page section.banner img {
+        max-height: 120px;
+    }
+}
+#contact_page section.banner h1.page-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+}
+#contact_page .contents {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 3em 0 4.5em;
+    gap: 3em;
+}
+@media (max-width: 767px) {
+    #contact_page .contents {
+        margin: 2em 0 3.5em;
+        grid-template-columns: 1fr;
+    }
+}
+#contact_page .contents h3 {
+    font-size: 26px;
+    margin-bottom: 1em;
+    font-weight: 500;
+}
+#contact_page .form-row {
+    margin-bottom: 1em;
+}
+#contact_page input.submitform {
+    background: #f76b6a;
+    border-color: #f76b6a;
+    color: #fff !important;
+    position: relative;
+    font-weight: 700;
+    padding: 0 10px;
+    min-height: 44px;
+    width: 100%;
+    font-size: 14px;
+}
+#contact_page .reward_program_message {
+    display: inline-grid;
+    grid-auto-flow: column;
+    gap: 1em;
+}
+#contact_page .address_location {
+    margin-top: 2em;
+}
+#contact_page a.call_us_now {
+    font-weight: 400;
+    font-size: 20px;
+}
+#contact_page .mt__40 {
+    margin-top: 1em;
+}
+#contact_page p.drop_us_line {
+    margin-bottom: 1em;
+}
+
+#contact_page .successFormMsg {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    padding: 1em;
+    border-radius: 4px;
+    margin-bottom: 1em;
+  }
+
+  #contact_page .contents{
+    margin-bottom: clamp(1em, 3vw, 3em);
+  }
+
+  #contact_page .pify_contact_form {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
+}
+
+  #contact_page .grid_contents{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3em;
+  }
+
+  @media (max-width: 1000px){
+    #contact_page .grid_contents{
+      gap: 2em;
+    }
+
+    #contact_page .container{
+      max-width: 991px;
+
+    }
+  }
+
+  @media (max-width: 767px){
+    #contact_page .grid_contents{
+      grid-template-columns: 1fr;
+      gap: 2.5em;
+    }
+  }

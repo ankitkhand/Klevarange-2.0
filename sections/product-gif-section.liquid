@@ -1,0 +1,369 @@
+<style>
+  .{{section.id}} .gif_section{
+      display: grid;
+      grid-auto-flow: column;
+      text-align: center;
+      margin-bottom:  {% if section.settings.p-bottom contains '0' %}0{% else %}clamp(10px, 3vw, {{ section.settings.p-bottom }}em){% endif %};
+  }
+  
+  .{{section.id}} .bonus_gift{
+    margin-top: {% if section.settings.p-top contains '0' %}0{% else %}clamp(10px, 3vw, {{ section.settings.p-top }}em){% endif %};
+  }
+  
+  .{{section.id}} .gif_section.two-columns{
+    grid-auto-flow: inherit;
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+    {% unless section.settings.two-column %}
+      .{{section.id}} .gif_section.column-6{
+        grid-auto-flow: inherit;
+        grid-template-columns: repeat(6, 1fr);
+      }
+    {% endunless %}
+
+    .{{section.id}} .gif_section.column-6 h2{
+      font-size: clamp(16px, 2vw, 18px);
+    }
+
+  .{{section.id}} .gif_section.three-columns{
+    grid-auto-flow: inherit;
+    grid-template-columns: repeat(3, 1fr)
+  }
+
+  .{{section.id}} .gif_section.four-columns{
+    grid-auto-flow: inherit;
+    grid-template-columns: repeat(4, 1fr)
+  }
+
+  .{{section.id}} .gif_section .title-first{
+      display: flex;
+      flex-flow: column;
+  }
+
+  {% if section.settings.img-mwidth %}
+    .{{section.id}} .gif_section .blur-load img{
+      max-width: {{ section.settings.img-width }}px;
+    }
+  {% endif %}
+
+  .{{section.id}} .gif_section .title-first h2{
+      order: -1;
+      margin: 0 0 8px;
+      padding: 0;
+  }
+
+    .{{section.id}} .gif_section .content-second p{
+      order: -1;
+      margin: 0 0 12px;
+    }
+
+    .{{section.id}} .gif_section .flex-item.content-second h2{
+      margin-bottom: 1px;
+    }
+
+    @media (max-width: 1200px){
+      .{{section.id}} .gif_section.column-6 br{
+        display: none;
+      }
+
+      .{{section.id}} .gif_section.four-columns{
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+  @media (max-width: 767px){
+      .{{section.id}} .gif_section{
+          grid-auto-flow: row;
+      }
+
+    .{{section.id}} .gif_section.two-columns, .{{section.id}} .gif_section.three-columns, .{{section.id}} .gif_section.four-columns{
+      grid-template-columns: 1fr;
+    }
+
+    {% unless section.settings.two-column %}
+      .{{section.id}} .gif_section.column-6{
+        grid-template-columns: repeat(3, 1fr);
+      }
+    {% endunless %}
+
+    .{{section.id}} .gif_section.single-col{
+      grid-template-columns: 1fr!important;
+    }
+
+    .{{section.id}} .gif_section.mobile-two-column{
+      grid-template-columns: 1fr 1fr!important;
+    }
+  }
+</style>
+
+<div class="{{ section.id }}">
+  {%- if section.settings.bonus-gift-content -%}
+    <div class="bonus_gift page-width">
+      <h3>{{- section.settings.bonus-gift-content -}}</h3>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width">
+    <div class="gif_section {% if section.settings.mobile-two-column == true %}mobile-two-column{% endif %} {% if section.settings.single-column %}single-col{% endif %} {% if section.settings.two-column %}two-columns{% endif %}  {% if section.settings.three-column %}three-columns{% endif %} {% if section.settings.four-column %}four-columns{% endif %} {% for block in section.blocks %}{% if forloop.last %}column-{{ forloop.index }}{% endif %}{% endfor %}">
+      {% for block in section.blocks %}
+        {%- if block.settings.col_url != blank -%}
+          <a
+            href="{{ block.settings.col_url }}"
+            class="flex-item {% if section.settings.title-first %}title-first{% endif %} {% if section.settings.content-second %}content-second{% endif %}"
+          >
+        {%- else -%}
+          <div
+            class="flex-item {% if section.settings.title-first %}title-first{% endif %} {% if section.settings.content-second %}content-second{% endif %}"
+          >
+        {% endif %}
+
+        <div class="blur-load">
+          {% if block.settings.youtube-col == true %}
+            {% comment %} YouTube {% endcomment %}
+            
+            <style>
+              .embed-container {
+                position: relative;
+                padding-bottom: 56.25%;
+                height: 0;
+                overflow: hidden;
+                max-width: 100%;
+              }
+              .embed-container iframe,
+              .embed-container object,
+              .embed-container embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+              }
+            </style>
+
+            <div class="embed-container">
+                                <iframe src="https://youtube.com/embed/{{- block.settings.youtube-link | remove: 'https://youtu.be/' -}}" frameborder="0" allowfullscreen=""
+                      allow=""
+                  >
+                  </iframe>
+            </div>
+
+            {% comment %} end {% endcomment %}
+          {% else %}
+            {% if block.settings.gif == blank %}
+              {%- assign emptyImg = 'product-' | append: forloop.index -%}
+              {%- if section.settings.hide-image == false -%}
+                <span class="emptysvg">
+                  {{ emptyImg | placeholder_svg_tag | class: 'emptysvg' }}
+                </span>
+              {%- endif -%}
+            {% else %}
+              <img src="{{ block.settings.gif | img_url: 'master' }}" alt="{{ block.settings.gif }}" loading="lazy">
+            {% endif %}
+          {% endif %}
+        </div>
+        {% if block.settings.title != blank %}
+          <h2>{{- block.settings.title -}}</h2>
+        {% endif %}
+
+        {%- if block.settings.content != blank -%}
+          <p>{{- block.settings.content -}}</p>
+        {%- endif -%}
+
+        {% if block.settings.btn_name != blank %}
+          <div class="btn_el">{{ block.settings.btn_name }}</div>
+        {% endif %}
+
+        {%- if block.settings.col_url != blank -%}
+          </a>
+        {% else %}
+          </div>
+        {%- endif -%}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gif/Columns Section",
+  "class": "design-product-section global_product_desc",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "title-first",
+      "default": false,
+      "label": "Make Title First"
+    },
+    {
+      "type": "checkbox",
+      "id": "content-second",
+      "default": false,
+      "label": "Make Content Second"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide-image",
+      "default": false,
+      "label": "Hide Empty Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "bonus-gift",
+      "default": false,
+      "label": "Visible Bonus Gift"
+    },
+    {
+      "type": "checkbox",
+      "id": "two-column",
+      "default": false,
+      "label": "Make Two Columns",
+      "info": "By clicking this, the section would have two columns."
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile-two-column",
+      "default": false,
+      "label": "Make Two Columns for Mobile",
+      "info": "By clicking this, the section would have two columns for mobile."
+    },
+    {
+      "type": "checkbox",
+      "id": "three-column",
+      "default": false,
+      "label": "Make Three Columns Having Same Height",
+      "info": "By clicking this, the section would have same heights for three columns"
+    },
+    {
+      "type": "checkbox",
+      "id": "four-column",
+      "default": false,
+      "label": "Make Four Columns Having Same Height",
+      "info": "By clicking this, the section would have same heights for four columns"
+    },
+    {
+      "type": "checkbox",
+      "id": "single-column",
+      "default": false,
+      "label": "Make Single Column For Mobile",
+      "info": "By clicking this, the section would have one column per row for mobile"
+    },
+    {
+      "type": "range",
+      "label": "Margin Top",
+      "id": "p-top",
+      "min": 0,
+      "max": 8,
+      "step": 0.5,
+      "unit": "em",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "label": "Margin Bottom",
+      "id": "p-bottom",
+      "min": 0,
+      "step": 0.5,
+      "max": 8,
+      "unit": "em",
+      "default": 1
+    },
+    {
+      "type": "html",
+      "id": "bonus-gift-content",
+      "default": "Bonus Gifts",
+      "label": "Make Title First"
+    },
+    {
+      "type": "header",
+      "content": "Image Section"
+    },
+    {
+      "type": "checkbox",
+      "default": false,
+      "label": "Set image max width",
+      "id": "img-mwidth"
+    },
+    {
+      "type": "range",
+      "label": "Image width",
+      "id": "img-width",
+      "min": 10,
+      "step": 5,
+      "max": 200,
+      "unit": "px",
+      "default": 20 
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "column",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Button Name",
+          "id": "btn_name"
+        },
+        {
+          "type": "url",
+          "label": "Link url",
+          "id": "col_url"
+        },
+        {
+          "type": "image_picker",
+          "id": "gif",
+          "label": "Image"
+        },
+        {
+          "type": "html",
+          "label": "Title",
+          "id": "title",
+          "default": "Title"
+        },
+        {
+          "type": "html",
+          "label": "Content",
+          "id": "content",
+          "default": "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups"
+        },
+        {
+          "type": "header",
+          "content": "YouTube Section"
+        },
+        {
+          "type": "checkbox",
+          "default": false,
+          "label": "YouTube Video",
+          "id": "youtube-col",
+          "info": "Please tick this box to replace the image/gif/videos by YouTube video"
+        },
+        {
+          "type": "html",
+          "id": "youtube-link",
+          "label": "Youtube Link",
+          "default": "https://youtu.be/3KfsI2aqQ5Y"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product: Gif/Columns",
+      "category": "Product",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

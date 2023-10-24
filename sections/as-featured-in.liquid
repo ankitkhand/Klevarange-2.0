@@ -1,0 +1,35 @@
+<div class="as-featured-in">
+    <div class="page-width">
+        <h1 class="home_title">{{- section.settings.title -}}</h1>
+
+        <div>
+            {{- section.settings.content -}}
+        </div>
+    </div>
+</div>
+
+
+{% schema %}
+    {
+        "name": "As featured in",
+        "settings": [
+            {
+                "type": "html",
+                "label": "Title",
+                "id": "title",
+                "default": "As Featured in:"
+            },
+            {
+                "type": "html",
+                "label": "content",
+                "id": "content"
+            }
+        ],
+        "presets":[
+            {
+                "category": "As Featured in",
+                "name": "Featured in"
+            }
+        ]
+    }
+{% endschema %}

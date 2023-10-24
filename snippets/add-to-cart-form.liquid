@@ -1,0 +1,244 @@
+<script>
+    window.Shopify = window.Shopify || {};
+    window.Shopify.routes = {{ routes | json }};
+  </script>
+
+{% assign newSelectedVariant = '' %} 
+{% if product.selected_variant.sku == nil %}
+    {% assign newSelectedVariant = product.variants.first %}
+{% else %}
+    {% assign newSelectedVariant = product.selected_variant %}
+{% endif %}
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% if current_variant.metafields.secomapp.freegifts %}
+  {% assign current_variant = product.variants[0] %}
+{% endif %}
+
+{% assign originalPrice = product.selected_or_first_available_variant.compare_at_price | times: 1 %}
+{% assign newPrice = product.selected_or_first_available_variant.price | times: 1 %}
+
+
+{% form 'product', product, class: 'product_mainform globalatc' %}
+    <input type="hidden" class="hiddenform" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    <input type="hidden" name="add" value="Add to cart"> <!-- Add this hidden input element -->
+
+    <div class="product_displaytag hidetab">
+        {% unless product.type == "FREE GIFT" or product.type == "UPSELL" %}
+            <div class="percentoff_cal {{ mobileClass }}">
+                <div class="toppercentoff">
+                    <h6><span class="js-percent-off">{{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100 | divided_by: product.selected_or_first_available_variant.compare_at_price }}</span>% OFF</h6>
+                </div>
+            </div>
+        {% endunless %}
+
+        {%- if product.tags contains 'popular-badge' -%}
+            <h6 class="popular">POPULAR</h6>
+        {%- endif -%}
+
+        {%- if product.tags contains 'tv-special' or product.tags contains 'tv-deal' -%}
+            <h6 class="tvdeal">TV SPECIAL</h6>
+        {%- endif -%}
+
+        {%- if product.tags contains 'click-frenzy' -%}
+            <h6 class="click-frenzy">CLICK FRENZY EXCLUSIVE</h6>
+        {%- endif -%}
+    </div>
+
+    <div class="hidetab">
+        {% render 'productTitleReviews', hidetab: 'hidetab' %}
+    </div>
+
+    <hr class="producthr hidetab" id="hr_beneath_main_product_title">
+    
+    <div class="product_price_payments">
+        {% render 'product_price_payments', originalPrice: originalPrice, newPrice: newPrice %}
+    </div>
+
+    {% if product.tags contains 'extra-discount-call' %}
+        <p style="font-size: clamp(14px, 2vw, 18px); display: flex; flex-wrap: wrap; column-gap: 5px; margin: 0 0 1em;     background: #3598db;
+            color: #fff; width: fit-content;
+            padding: 4px 8px;">Would you like an extra discount? <a href="tel:02 9087 9630" style="color:#fff;">Call: <strong>(02) 9087 9630</strong></a></p>
+    {% endif %}
+
+    {%- if product.tags contains 'click-frenzy-discount' -%}
+        <h6 class="click-frenzy-discount">Click Frenzy additional <strong>$40 discount</strong> already applied</h6>
+    {%- endif -%}
+
+    <div class="afterpay_warehouse">
+        {% render 'new_design_afterpay_design', newSelectedVariant: newSelectedVariant %}
+        {% render 'leave_warehouse' %}
+    </div>
+
+    {%- unless product.has_only_default_variant or product.type == 'UPSELL' or product.type == 'FREE GIFT' -%}
+        <div data-url="{{ product.url }}" class="variant_selector">
+            {%- for option in product.options_with_values -%}
+                {% assign option_name = 'option' | append: option.position %}
+
+                {% assign selected = false %}
+                {% if has_selected_variant %}
+                    {% assign selected = product.selected_variant[option_name] %}
+                {% endif %}
+
+                <div>
+                    {% if productVariantSelection == 'radio' %}
+                        <label class="radio-label">{{ option.name }}:</label>
+                        <div class="radio-option {% for value in option.values %}{% if forloop.length == 2 %}two-col{% break %}{% endif %}{% endfor %}">
+                            {% for value in option.values %}
+                                <div class="pos_relative">
+                                    {% assign radio_id = 'option-' | append: option_name | append: '-' | append: value | handleize %}
+                                    <input class="variant-radio" id="{{ radio_id }}" type="radio" name="{{ option.name }}" value="{{value}}" {% if value == selected %}checked{% endif %} data-index="option{{ forloop.index }}">
+                                    <label for="{{ radio_id }}" class="pos_relative {% if value == newSelectedVariant.title %}active{% endif %}">{{ value }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <label for="Option-{{forloop.index0}}">CHOOSE YOUR {{option.name}}:</label>
+
+                        <div class="select">
+                            <select class="variant-option select__select" id="ProductSelect-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
+                                {%- for value in option.values -%}
+                
+                                    <!-- Check to see if there's a product size option. If there is a size, check to see if there's any availble for purchase. If not, set the variat control in a "disabled" state. -->
+                                    {%- assign variant_label_state = true -%}
+                
+                                    {%- if product.options.size == 1 -%}
+                                        {%- unless product.variants[forloop.index0].available -%}
+                                        {%- assign variant_label_state = false -%}
+                                        {%- endunless -%}
+                                    {%- endif -%}
+                
+                                    <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>
+                                        {{ value | escape }}
+                                    </option>
+                                {%- endfor -%}
+                            </select>
+                
+                            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+                            </path>
+                            </svg>
+                        </div>        
+                    {% endif %}
+                
+                </div>
+            {%- endfor -%}
+        </div>
+    {%- endunless -%}
+
+  
+  <div class="please_select_size" style="display: none;">
+    <div class="please_select_size_child">
+      <div>
+        <span class="title">You've selected <strong><span class="customerSelectedSize">{{ newSelectedVariant.title }}</span></strong> bed size, is this correct?</span>
+
+        <div class="confirm_select_size">
+          <button type="submit" name="add" class="button yes">
+            Yes
+          </button>
+          <button type="button" name="add" class="button no">
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endform %}
+
+{%- unless product.type == 'UPSELL' or product.type == 'FREE GIFT' -%}
+    <div>
+        {%- assign productAvailable = true -%}
+        {%- if product.selected_or_first_available_variant.available == false and product.selected_or_first_available_variant.inventory_policy == 'deny' -%}
+            {%- assign productAvailable = false -%}
+        {%- endif -%}
+
+        <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+        {%- render 'buy-buttons', product: product, product_form_id: product.selected_or_first_available_variant.id, productAvailable: productAvailable, productVariantSelection: productVariantSelection -%}
+    
+    </div>
+{% endunless %}
+
+
+<!-- small descriptions that is being taken from metafields -->
+{% if product.metafields.meta.description_excerpt %}
+    <div class="new_product_short_desc">
+        <p>{{ product.metafields.meta.description_excerpt }}</p>
+    </div>
+{% endif %}
+
+<div class="shipping_guarantee">
+    <div class="flex">
+      <svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>69308A9A-0626-4A74-8A78-FBD64FF94C7E</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="SSP_PDP_5a_DT" transform="translate(-910.000000, -802.000000)" fill="#3954A3">
+                <g id="icons/20/truck" transform="translate(910.000000, 802.000000)">
+                    <g id="truck-light" transform="translate(1.400000, 4.200000)">
+                        <path d="M2.52,15.925 C1.12809375,15.925 0,14.8263281 0,13.475 L0,2.45 C0,1.09675781 1.12809375,0 2.52,0 L13.86,0 C15.2499375,0 16.38,1.09675781 16.38,2.45 L16.38,3.675 L18.9511875,3.675 C19.5024375,3.675 20.026125,3.90851563 20.3844375,4.318125 L23.48325,7.83234375 C23.7785625,8.16539063 23.94,8.5903125 23.94,9.02671875 L23.94,14.7 L24.57,14.7 C24.9165,14.7 25.2,14.975625 25.2,15.3125 C25.2,15.649375 24.9165,15.925 24.57,15.925 L22.68,15.925 C22.68,17.9539063 20.986875,19.6 18.9,19.6 C16.7776875,19.6 15.12,17.9539063 15.12,15.925 L10.0445625,15.925 C10.0445625,17.9539063 8.386875,19.6 6.2645625,19.6 C4.1776875,19.6 2.4845625,17.9539063 2.4845625,15.925 L2.52,15.925 Z M1.26,2.45 L1.26,13.475 C1.26,14.1525781 1.82424375,14.7 2.52,14.7 L2.7349875,14.7 C3.25395,13.2721094 4.654125,12.25 6.3,12.25 C7.945875,12.25 9.347625,13.2721094 9.8634375,14.7 L15.12,14.7 L15.12,2.45 C15.12,1.77357031 14.5569375,1.225 13.86,1.225 L2.52,1.225 C1.82424375,1.225 1.26,1.77357031 1.26,2.45 Z M22.4791875,8.575 L19.427625,5.114375 C19.3095,4.9765625 19.1008125,4.9 18.9511875,4.9 L16.38,4.9 L16.38,8.575 L22.4791875,8.575 Z M16.38,9.8 L16.38,13.1840625 C17.0139375,12.6021875 17.931375,12.25 18.9,12.25 C20.545875,12.25 21.947625,13.2721094 22.4634375,14.7 L22.68,14.7 L22.68,9.8 L16.38,9.8 Z M6.3,13.475 C4.9100625,13.475 3.78,14.5736719 3.78,15.925 C3.78,17.2763281 4.9100625,18.375 6.3,18.375 C7.6899375,18.375 8.82,17.2763281 8.82,15.925 C8.82,14.5736719 7.6899375,13.475 6.3,13.475 Z M18.9,18.375 C20.2899375,18.375 21.42,17.2763281 21.42,15.925 C21.42,14.5736719 20.2899375,13.475 18.9,13.475 C17.5100625,13.475 16.38,14.5736719 16.38,15.925 C16.38,17.2763281 17.5100625,18.375 18.9,18.375 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+      </svg>
+  
+      <h6>FREE Shipping on orders over $150</h6>
+    </div>
+  
+    <div class="flex">
+        <svg width="28px" height="28px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>260ACF44-D233-4930-B618-69E67CE4B668</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="SSP_Home_8_DT" transform="translate(-973.000000, -711.000000)" fill="#3954A3" fill-rule="nonzero">
+                    <g id="Group-15" transform="translate(973.000000, 709.000000)">
+                        <g id="icons/20/improvesleep" transform="translate(-0.000000, 2.000000)">
+                            <g id="moon-cloud-light" transform="translate(1.800000, 5.400000)">
+                                <path d="M32.2122243,17.5291071 C31.9304496,17.0378116 31.3951486,16.7895 30.8565063,16.8976205 C28.6776377,17.3285357 26.4516884,16.7360143 24.7461567,15.2737232 C23.0396125,13.8096563 22.0620578,11.6550804 22.0620578,9.36104464 C22.0620578,6.60736607 23.4977621,4.04903571 25.8087602,2.68577679 C26.2874126,2.40502902 26.5377497,1.85841964 26.446626,1.29326786 C26.354996,0.73125 25.9449394,0.298767857 25.4032597,0.194303571 C24.826143,0.0851383929 23.9199686,0 23.3428519,0 C18.7947673,0 14.7215383,2.83829464 12.9598137,7.22892857 C12.7876911,7.65723214 12.9800634,8.14299107 13.3951824,8.32058036 C13.8028597,8.50015446 14.276551,8.29609915 14.4481673,7.86845893 C15.9567706,4.10544643 19.4498453,1.67142857 23.3428519,1.67142857 C23.5931889,1.67142857 23.9331309,1.69264527 24.2687698,1.72527991 C21.8949977,3.46508036 20.4471435,6.31486607 20.4471435,9.36522321 C20.4471435,12.1580759 21.6388389,14.7816964 23.7154465,16.5628125 C25.5667761,18.1527589 27.9223235,18.9017679 30.25104,18.6682902 C28.4812155,20.62125 25.9854389,21.7285714 23.3428519,21.7285714 C20.740258,21.7285714 18.2910557,20.6515446 16.447826,18.6959732 C16.1393217,18.3646125 15.6292315,18.3613741 15.3082736,18.6829152 C14.9847845,19.0072768 14.9797221,19.5348214 15.2935926,19.8638839 C17.4400617,22.0994196 20.3003331,23.4 23.3428519,23.4 C26.757459,23.4 29.9543818,21.8215446 32.1109758,19.0678661 C32.4552208,18.6259821 32.4957203,18.0200893 32.2122243,17.5291071 Z M12.0030149,9.69428571 C11.1879641,7.91316964 9.44142674,6.68571429 7.45695528,6.68571429 C5.35098556,6.68571429 3.54521777,8.0071875 2.79597855,9.95022321 C1.15878959,10.5456696 0,12.1491964 0,14.04 C0,16.4426786 1.87664177,18.3857143 4.19422094,18.3857143 L11.9296097,18.3857143 C14.2471889,18.3857143 16.1238307,16.440067 16.1238307,14.0373884 C16.1187682,11.6686607 14.2760447,9.73607143 12.0030149,9.69428571 Z M11.9270785,16.7142857 L4.19422094,16.7142857 C2.7645915,16.7142857 1.61238307,15.5192143 1.61238307,14.0373884 C1.61238307,12.6010045 2.70789231,11.4388393 4.08082257,11.3735491 C4.32635029,9.66816964 5.73573003,8.35714286 7.45695528,8.35714286 C9.25816688,8.35714286 10.7191834,9.80658482 10.8573876,11.6415 C11.1847748,11.4782746 11.5438528,11.3672812 11.928091,11.3672812 C13.3577204,11.3672812 14.5099289,12.5623527 14.5099289,14.0379107 C14.5089164,15.5181696 13.354683,16.7142857 11.9270785,16.7142857 Z" id="Shape"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+  
+      <h6>Proven to improve sleep</h6>
+    </div>
+  </div>
+
+{% assign variants_with_quantity_json = product.variants | json %}
+
+{% comment %} for inventory quantiry {% endcomment %}
+{% unless variants_with_quantity_json contains 'inventory_quantity' %}
+    <!-- Append inventory_quantity in the product variants, if does not have any inventory_quantity -->
+    {% for variant in product.variants %}
+        {% assign replace_hook_variant_id = '"id":' | append: variant.id %}
+        {% assign update_json = replace_hook_variant_id | append: ',' | append: '"inventory_quantity":' | append: variant.inventory_quantity %}
+        {% assign variants_with_quantity_json = variants_with_quantity_json | replace: replace_hook_variant_id, update_json %}
+    {% endfor %}
+{% endunless %}
+
+{% comment %} for inventory policy {% endcomment %}
+{% unless variants_with_quantity_json contains 'inventory_policy' %}
+    <!-- Append inventory_quantity in the product variants, if does not have any inventory_quantity -->
+    {% for variant in product.variants %}
+        {% assign replace_hook_variant_id = '"id":' | append: variant.id %}
+        {% assign update_json = replace_hook_variant_id | append: ',' | append: '"inventory_policy":' | append: '"' | append: variant.inventory_policy | append: '"' %}
+        {% assign variants_with_quantity_json = variants_with_quantity_json | replace: replace_hook_variant_id, update_json  %}
+    {% endfor %}
+{% endunless %}
+
+{% unless variants_with_quantity_json contains 'tags' %}
+    {% for variant in product.variants %}
+      {% assign replace_hook_variant_id3 = '"id":' | append: variant.id %}
+      {% assign replace_id_tags = replace_hook_variant_id3 | append: ',' | append: '"tags":' | append: '' | append: product.tags | append: '' %}
+      {% assign variants_with_quantity_json = variants_with_quantity_json | replace: replace_hook_variant_id3, replace_id_tags  %}
+    {% endfor %}
+{% endunless %}
+
+<script>
+    // Store the product variants as a global variable, including the inventory quantity
+    window.productVariants = {{ variants_with_quantity_json }};
+</script>
+
+
+{{ 'custom_product.js' | asset_url | script_tag }}
+{{ 'button_animation.css' | asset_url | stylesheet_tag }}

@@ -1,0 +1,64 @@
+<div class="collection-size">
+  {% if collection.handle contains 'mattress-toppers' %}
+    <p class="shopby">Shop by Size:</p>
+  {% endif %}
+    
+    {% assign displayed_variants = "" %}
+    {% assign standardized_titles = "" %}
+    
+    {% for product in collection.products %}
+      {% for variant in product.variants %}
+        {% assign downcased_title = variant.title | downcase %}
+        {% assign standardized_title = variant.title %}
+        
+        {% if downcased_title contains 'king single' %}
+          {% assign standardized_title = "King Single" %}
+        {% elsif downcased_title contains 'super king' %}
+          {% assign standardized_title = "Super King" %}
+        {% elsif downcased_title contains 'king' or downcased_title contains 'King' %}
+          
+            {% assign standardized_title = "King" %}
+          
+        {% elsif downcased_title contains 'queen' %}
+          {% assign standardized_title = "Queen" %}
+        {% elsif downcased_title contains 'double' %}
+          {% assign standardized_title = "Double" %}
+        {% elsif downcased_title contains 'single' %}
+          {% assign standardized_title = "Single" %}
+        {% endif %}
+        
+        {% unless displayed_variants contains standardized_title %}
+          {% assign displayed_variants = displayed_variants | append: standardized_title | append: "," %}
+          {% assign standardized_titles = standardized_titles | append: standardized_title | append: "," %}
+        {% endunless %}
+      {% endfor %}
+    {% endfor %}
+    
+
+    {% assign order = "Single,King Single,Double,Queen,King,Super King" | split: "," %}
+    {% assign standardized_titles = standardized_titles | split: "," %}
+    
+    {% comment %} <div class="collection-size-item">
+        {% for title in order %}
+            {% if standardized_titles contains title %}
+                <p>{{ title }}</p>,
+            {% endif %}
+        {% endfor %}
+    </div> {% endcomment %}
+   {% if collection.handle contains 'mattress-toppers' %}
+      <a href="/collections/single-mattress-toppers" class="{% if collection.handle == 'single-mattress-toppers' %}active{% endif %}">Single</a>
+      <a href="/collections/king-single-mattress-toppers" class="{% if collection.handle == 'king-single-mattress-toppers' %}active{% endif %}">King Single</a>
+      <a href="/collections/double-mattress-toppers" class="{% if collection.handle == 'double-mattress-toppers' %}active{% endif %}">Double</a>
+      <a href="/collections/queen-mattress-toppers" class="{% if collection.handle == 'queen-mattress-toppers' %}active{% endif %}">Queen</a>
+      <a href="/collections/king-mattress-toppers" class="{% if collection.handle == 'king-mattress-toppers' %}active{% endif %}">King</a>
+      <a href="/collections/super-king-mattress-toppers" class="{% if collection.handle == 'super-king-mattress-toppers' %}active{% endif %}">Super King</a>
+   {% endif %}
+
+</div>
+
+
+
+
+
+
+

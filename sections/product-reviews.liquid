@@ -1,0 +1,437 @@
+{% style %} 
+    .product_reviews.{{ section.id }}{
+        background-color: {{ section.settings.bg-color }};
+        padding: clamp(1em, 4vw, {{ section.settings.p-top }}em) 0 clamp(3em, 4vw, {{ section.settings.p-bottom }}em);
+    }
+
+    .product_reviews .flickity-enabled .flickity-button{
+      top: 7em;
+      background: rgba(0,0,0,.4);
+      opacity: 1;
+    } 
+
+  .product_reviews .gridcontent p{
+    line-height: 1.5;
+  }
+
+    .global_product_desc .product_reviews .designfont{
+        transform: rotate(-5deg);
+        margin: 0;
+        font-size: clamp(26px,4vw,34px);
+    }
+
+  .product_reviews .review-bottom{
+    align-self: flex-end;
+  }
+
+  .product_reviews .page-width{
+    max-width: none!important;
+  }
+
+  .product_reviews .flickity-prev-next-button.previous{
+    left: clamp(-23px, 1vmin, -7px);
+  }
+
+  .product_reviews .flickity-prev-next-button.next{
+    right: clamp(-23px, 1vmin, -7px);
+  }
+
+    .product_reviews .gridcol {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 40%;
+        overflow: scroll;
+        text-align: center;
+    }
+    .global_product_desc .product_reviews h2.p_title{
+        margin-bottom: 1em;
+    }
+    .product_reviews .gridcol.flickity-enabled {
+        overflow: initial;
+        padding: 0 0 clamp(1em, 2vw, 1.5em);
+    }
+    @media (max-width: 1560px) {
+        .product_reviews .gridcol {
+            
+        }
+    }
+    @media (max-width: 1110px) {
+        .product_reviews .gridcol {
+            grid-auto-columns: 50%;
+            gap: 10px;
+        }
+
+        .global_product_desc .product_reviews .gridcol .grid_child{
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 780px) {
+        .product_reviews .gridcol {
+            /* grid-auto-columns: 100%; */
+        }
+    }
+
+    @media (max-width: 600px) {
+        .product_reviews .flickity-prev-next-button.previous{
+          left: -23px;
+        }
+      .product_reviews .flickity-prev-next-button.next{
+        right: -23px;
+      }
+
+      .product_reviews .flickity-enabled .flickity-button{
+        top: 50%;
+      }
+    }
+    .product_reviews .gridcol.slick-slider {
+        grid-auto-columns: 100%;
+        position: inherit;
+    }
+    .product_reviews .gridcol.flickity-enabled {
+        display: block;
+    }
+    .product_reviews .gridcol.flickity-enabled .flickity-slider {
+        display: flex;
+    }
+    .product_reviews .gridcol.flickity-enabled .grid_child {
+        height: auto;
+        min-height: 100%;
+        margin-right: 10px;
+        width: 33%;
+    }
+    .product_reviews .gridcol .grid_child {
+        display: grid;
+        background: #fff;
+        padding: clamp(1em, 2vw, 1.5em) clamp(14px, 2vw, 16px) clamp(16px, 2vw, 20px);
+        height: 100%;
+        border-radius: 8px;
+        max-width: 100%;
+        text-align: left;
+    }
+    .product_reviews .gridcol .grid_child .review {
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: clamp(4px, 4vmin, 4rem);
+        background: #2a3242;
+        padding: 0 clamp(4px, 2vmin, 1em);
+        border-radius: 4px;
+        height: 60px;
+        align-self: flex-end;
+    }
+    .product_reviews .gridcol .grid_child .review img {
+        max-width: 100px;
+        width: 100%;
+        align-self: flex-end;
+    }
+    .product_reviews .gridcol h3 {
+        font-size: clamp(15px, 2vmin, 14px);
+        font-weight: 600;
+        padding-top: 0;
+        letter-spacing: 0;
+        text-transform: capitalize;
+        line-height: 1.3;
+        margin: 11px 0 clamp(1em, 2vw, 2em);
+    }
+    .product_reviews .gridcol p {
+        font-size: clamp(13px, 2vmin, 14px);
+        font-weight: 400;
+        line-height: 1.65;
+        margin: clamp(7px, 1vmin, 2em) 0 10px;
+        width: 100%;
+    }
+    .product_reviews .gridcol h2 {
+        font-size: clamp(14px, 2vmin, 16px);
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: capitalize;
+        padding: 0;
+        margin: 0;
+        color: #242424;
+        align-self: flex-end;
+        margin-top: clamp(1em, 3vw, 2.5em);
+    }
+
+    .product_reviews .gridcol h6 {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 400;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
+    .product_reviews .gridcol h6 img{
+        max-width: 20px;
+    }
+
+    .global_product_desc .product_reviews .pc_content .top-section{
+        display: grid;
+        gap: 10px;
+    }
+
+    .global_product_desc .product_reviews .pc_content .top-section svg{
+        transform: scaleX(-1);
+        position: absolute;
+        right: -6em;
+        top: -20px;
+    }
+
+    .global_product_desc .product_reviews .pc_content .top-section .pos_relative{
+        width: fit-content;
+    }
+
+    @media (max-width: 980px){
+        .product_reviews .gridcol.flickity-enabled .grid_child{
+            width: 50%;
+        }
+    }
+
+    @media (max-width: 700px){
+        .global_product_desc .product_reviews .pc_content .top-section .pos_relative{
+            order: 1;
+            margin: 0 0 1.5em;
+        }
+
+        .global_product_desc .product_reviews .pc_content .top-section svg{
+            height: 60px;
+            right: -5em;
+            top: -7px;
+        }
+
+        .global_product_desc .product_reviews h2.p_title{
+            margin-bottom: 8px;
+        }
+    }
+
+    @media (max-width: 670px){
+        .product_reviews .gridcol.flickity-enabled .grid_child{
+            width: 100%;
+        }
+    }
+    
+{% endstyle %}
+
+<div class="product_reviews {{ section.id }}">
+    <div class="page-width">
+        <div class="pc_content">   
+            <div class="top-section">              
+                <div class="pos_relative">
+                    <?xml version="1.0" encoding="UTF-8"?>
+                        <svg style="width: auto;" height="86px" viewBox="0 0 81 86" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>A1E2A00C-E2A0-4B16-B923-BD18E073C064</title>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="SSP_Home_8_DT" transform="translate(-1173.000000, -2262.000000)" fill="#FD3170" fill-rule="nonzero">
+                                    <g id="Group-22-Copy" transform="translate(1213.452796, 2305.007359) rotate(-236.000000) translate(-1213.452796, -2305.007359) translate(1179.560660, 2280.004311)">
+                                        <path d="M54.7952065,44.9992225 C39.1216881,44.9992225 12.4836982,39.0991602 0.168330887,1.95101795 C-0.589349518,0.241757685 1.38568367,-1.01774531 2.61369597,1.14976109 C9.82560265,22.9043685 22.7080978,36.2652049 40.9051741,40.8615869 C54.5286611,44.3042999 66.216646,41.2787371 66.3316355,41.248369 L67,43.7226403 C66.8481772,43.7628369 61.9701326,45 54.7950226,45 L54.7952065,44.9992225 Z" id="Path"></path>
+                                        <path d="M57.0605189,50.0060967 C56.6399502,50.0060967 56.2291918,49.7889238 55.9855502,49.3928176 C55.6058844,48.7740574 55.7792719,47.9521549 56.3714299,47.5560344 L64.0881149,42.4038556 L57.7885759,38.4780355 C57.1839785,38.1014123 56.9865887,37.2850669 57.3475672,36.6551688 C57.7085456,36.0234183 58.4900927,35.8174974 59.0947128,36.1950468 L67.1635218,41.2230223 C67.5422999,41.4595761 67.7779067,41.8835081 67.7841434,42.34458 C67.7903672,42.8056282 67.5689744,43.2369911 67.1964353,43.4856113 L57.745761,49.7955163 C57.5332597,49.9383762 57.2949648,50.0060967 57.0602457,50.0060967 L57.0605189,50.0060967 Z" id="Path"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    <h5 class="designfont">{{- section.settings.review-text -}}</h5>
+                    </div>
+
+                <h2 class="p_title text_align_center">
+                    {{- section.settings.heading -}}
+                </h2>
+            </div>
+
+            <div class="gridcol">
+                {% for block in section.blocks %}
+                    <div class="grid_child">
+                        <div>
+                            <div class="verified">
+                                <svg width="80" height="14" viewBox="0 0 80 14" xmlns="http://www.w3.org/2000/svg"><g fill="#FFB829" fill-rule="evenodd"><path d="M71.996 11.368l-3.94 2.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37 1.778-4.3c.21-.51.55-.512.762 0l1.78 4.3 4.602.37c.552.046.666.37.237.74l-3.507 3.02 1.075 4.532c.127.536-.147.74-.628.444l-3.94-2.422zM55.996 11.368l-3.94 2.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37 1.778-4.3c.21-.51.55-.512.762 0l1.78 4.3 4.602.37c.552.046.666.37.237.74l-3.507 3.02 1.075 4.532c.127.536-.147.74-.628.444l-3.94-2.422zM40.123 11.368l-3.94 2.42c-.475.292-.756.096-.63-.443l1.076-4.53-3.508-3.022c-.422-.363-.324-.693.24-.74l4.602-.37 1.778-4.3c.21-.51.55-.512.762 0l1.778 4.3 4.603.37c.554.046.667.37.24.74l-3.508 3.02 1.075 4.532c.127.536-.147.74-.628.444l-3.94-2.422zM24.076 11.368l-3.94 2.42c-.475.292-.757.096-.63-.443l1.076-4.53-3.507-3.022c-.422-.363-.324-.693.238-.74l4.603-.37 1.78-4.3c.21-.51.55-.512.76 0l1.78 4.3 4.602.37c.554.046.667.37.24.74l-3.508 3.02 1.074 4.532c.127.536-.146.74-.628.444l-3.94-2.422zM8.123 11.368l-3.94 2.42c-.475.292-.756.096-.63-.443l1.076-4.53L1.12 5.792c-.422-.363-.324-.693.24-.74l4.602-.37 1.778-4.3c.21-.51.55-.512.762 0l1.778 4.3 4.603.37c.554.046.667.37.24.74l-3.508 3.02 1.075 4.532c.127.536-.147.74-.628.444l-3.94-2.422z"/></g></svg>
+                            </div>
+
+                            <h3>{{- block.settings.title -}}</h3>
+                            
+                            <p>{{- block.settings.body -}}</p>
+                            
+                        </div>
+
+                        <span class="review-bottom">
+                            <h2>{{- block.settings.name -}}</h2>
+
+                            <h6>
+                                {%- unless section.settings.verified-logo == blank -%}
+                                    <img src="{{ section.settings.verified-logo | img_url: "master" }}" alt="super sleeper pro - verified buyer">
+                                {%- endunless -%}
+
+                                <span>
+                                    {{- block.settings.verified-content -}}
+                                </span>
+                            </h6>
+                        </span>
+
+                    </div>
+                {% endfor %}
+            </div>
+            {% comment %} <a class="review_link" href="{{ section.settings.url }}">
+                VIEW MORE REVIEWS
+                <svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title>8EB0409D-A75A-4EB1-A2DC-0A3F9DB9E578</title>
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="#242424" fill-rule="evenodd">
+                        <g id="SSP_Home_8_DT" transform="translate(-215.000000, -1694.000000)" fill="#242424">
+                            <g id="Group-Copy-5" transform="translate(108.000000, 1679.000000)">
+                                <g id="Group-23" transform="translate(18.000000, 11.000000)">
+                                    <g id="icons/20/arrowright" transform="translate(89.000000, 4.000000)">
+                                        <path d="M8.48018717,5.27855544 L3.77959599,1.17170653 L3.77966068,1.17170653 C3.72338275,1.1223355 3.65047846,1.09673223 3.57615331,1.10033452 C3.50176193,1.10387044 3.43157515,1.13628202 3.38014769,1.19082601 C3.32878481,1.24530461 3.30006458,1.31778966 3.3,1.39315117 L3.3,9.60684899 C3.30006468,9.68221553 3.32878646,9.75470058 3.38014769,9.80917416 C3.43157515,9.86371814 3.50176193,9.8961304 3.57615331,9.89966564 C3.65048012,9.90326693 3.72338275,9.87766466 3.77966068,9.82829364 L8.48025185,5.72144473 L8.48018717,5.72144473 C8.54358098,5.66578771 8.58,5.58498671 8.58,5.49999338 C8.58,5.41500004 8.54358098,5.33420073 8.48018717,5.27854203 L8.48018717,5.27855544 Z" id="Path"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </a> {% endcomment %}
+        </div>
+    </div>
+</div>
+
+
+
+{% schema %}
+{
+   "name": "Review",
+   "class": "global_product_desc",
+   "max_blocks": 12,
+   "settings":[
+        {
+            "id": "checkbox",
+            "type": "checkbox",
+            "label": "Autoplay",
+            "default": false
+        },
+        {
+            "type": "color",
+            "label": "Background Color",
+            "id": "bg-color",
+            "default": "#eee"
+        },
+        {
+            "type": "range",
+            "label": "Margin Top",
+            "id": "p-top",
+            "min": 1,
+            "max": 8,
+            "unit": "em",
+            "default": 1
+        },
+        {
+            "type": "range",
+            "label": "Margin Bottom",
+            "id": "p-bottom",
+            "min": 1,
+            "max": 8,
+            "unit": "em",
+            "default": 1
+        },
+        {
+            "type": "html",
+            "label": "Reviews Text",
+            "id": "review-text",
+            "default": "Real Reviews!"
+        },
+        {
+            "type": "html",
+            "label": "Title",
+            "id": "heading",
+            "default": "Life-Changing Results From Real People"
+        },
+        {
+            "type": "image_picker",
+            "label": "Verified Logo",
+            "id": "verified-logo"
+        },
+        {
+            "type": "url",
+            "label": "URL",
+            "id": "url"
+         }
+   ],
+   "blocks":[
+        {
+            "type": "review",
+            "name": "Review",
+            "settings":[
+                {
+                   "type": "text",
+                   "id": "title",
+                   "label": "Title",
+                   "default": "Title"
+                },
+                {
+                   "type": "html",
+                   "id": "body",
+                   "label": "Body",
+                   "default": "I am enjoying a good night sleep. I have changed me mattress over recent times but since fitted super sleeper we have enjoyed a deeper slee for longer. Life-Changing Results From Real People..."
+                },
+                {
+                    "type": "text",
+                    "id": "name",
+                    "label": "Name",
+                    "default": "Name"
+                },
+                {
+                    "type": "html",
+                    "id": "verified-content",
+                    "label": "Name",
+                    "default": "Verified Buyer, from Australia"
+                }
+            ]
+        }
+   ],
+  "presets": [
+      {
+        "category": "Product Review",
+        "name":"Product Review",
+        "blocks":[
+            {
+                "type": "review"
+            },
+            {
+                "type": "review"
+            },
+            {
+                "type": "review"
+            },
+            {
+                "type": "review"
+            }
+        ]
+      }
+  ]
+}
+{% endschema %}
+
+
+<script>
+    let reviewCarousel = document.querySelector('.product_reviews .gridcol')
+
+    let reviewCarouselE = new Flickity(reviewCarousel, {
+        imagesLoaded: true,
+        contain: true,
+        percentPosition: true,
+        autoPlay: {{ section.settings.checkbox }},
+        initialIndex: 1,
+        contain: true
+    })
+</script>
+
+
+{% comment %} <script defer>
+    let productReviewBtn{{- section.id | replace: '-', '' }} = document.querySelectorAll('.global_product_desc .product_reviews a.switchReview');
+    productReviewBtn{{- section.id | replace: '-', '' }}.forEach(el => {
+        el.addEventListener('click', function(e){
+            //e.preventDefault();
+
+            console.log('Review button clicked');
+            let reviewSection = document.querySelector('.product_dropdown #title-r');
+            reviewSection.click();
+        })
+    })
+</script> {% endcomment %}

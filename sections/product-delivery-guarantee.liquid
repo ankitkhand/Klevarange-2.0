@@ -1,0 +1,185 @@
+{% style %}
+    .product_deliver_guarantee.{{ section.id }}{
+        background-color: {{ section.settings.bg-color }};
+        padding: clamp(1em, 8vw, {{ section.settings.p-top }}em) 0 clamp(1em, 8vw, {{ section.settings.p-bottom }}em);
+    }
+
+    .product_deliver_guarantee.{{ section.id }} .pc_content.inline{
+        display: grid;
+        grid-auto-flow: column;
+        gap: clamp(1em, 3vw, 4em);
+        row-gap: 2.5em;
+    }
+
+    .product_deliver_guarantee.{{ section.id }} .pc_content.block{
+        display: grid;
+        grid-auto-flow: row;
+        gap: 1em;
+    }
+
+    .product_deliver_guarantee.{{ section.id }} .pc_content img{
+        width: clamp(108px, 10vw, 194px);
+    }
+
+    @media (max-width: 767px){
+        .product_deliver_guarantee.{{ section.id }} .pc_content.inline{
+            grid-auto-flow: row;
+        }
+    }
+{% endstyle %}
+
+
+<div class="product_deliver_guarantee {{ section.id }}">
+    <div class="page-width">
+
+        <div class="pc_content {{ section.settings.column_display }}">
+            {%- for block in section.blocks -%}
+                <div class="inline_pc_content" style="text-align: {{ block.settings.text_alignment }}">
+
+                  {% unless section.settings.hide-img %}
+                    {%- if block.settings.dk_img == nil -%}
+                        {%- assign emptyImg = 'product-' | append: forloop.index -%}
+                        <span class="emptysvg">
+                            {{ emptyImg | placeholder_svg_tag | class: 'emptysvg' }}
+                        </span>
+                    {%- else -%}
+                        <div>
+                            <img src="{{- block.settings.dk_img | img_url: 'master' -}}" loading="lazy" alt="{{ block.settings.dk_img.alt }}">
+                        </div>
+                    {%- endif -%}
+                  {% endunless %}
+
+                    {% if block.settings.title != nil or block.settings.content != nil %}
+                        <div class="content">
+                            <h2 class="p_title">{{ block.settings.title }}</h2>
+
+                            {{ block.settings.content }}
+                        </div>
+                    {% endif %}
+                </div>
+            {%- endfor -%}
+        </div>                    
+
+    </div>
+</div>
+
+
+{% schema %}
+    {
+        "name": "Delivery & Guarantee",
+        "class": "global_product_desc",
+        "settings": [
+            {
+                "type": "select",
+                "label": "Display",
+                "info": "By selecting this, it will display columns inline or block",
+                "id": "column_display",
+                "options": [
+                  {
+                    "value": "inline",
+                    "label": "Inline"
+                  },
+                  {
+                    "value": "block",
+                    "label": "Block"
+                  }
+                ],
+                "default": "inline"
+            },
+            {
+                "type": "color",
+                "label": "Background Color",
+                "id": "bg-color",
+                "default": "#d1eaf7"
+            },
+            {
+                "type": "range",
+                "label": "Padding Top",
+                "id": "p-top",
+                "min": 1,
+                "max": 8,
+                "unit": "em",
+                "default": 1
+            },
+            {
+                "type": "range",
+                "label": "Padding Bottom",
+                "id": "p-bottom",
+                "min": 1,
+                "max": 8,
+                "unit": "em",
+                "default": 1
+            },
+            {
+              "type": "header",
+              "content": "Image Settings"
+            },
+            {
+              "type": "checkbox",
+              "id": "hide-img",
+              "label": "Hide Empty Image",
+              "default": false
+            }
+            
+
+        ],
+        "max_blocks": 3,
+        "blocks":[
+            {
+                "type": "Column",
+                "name": "Column",
+                "settings": [
+                    {
+                        "type": "select",
+                        "label": "Text Alignment",
+                        "id": "text_alignment",
+                        "options": [
+                          {
+                            "value": "left",
+                            "label": "Left"
+                          },
+                          {
+                            "value": "center",
+                            "label": "Center"
+                          },
+                          {
+                            "value": "right",
+                            "label": "Right"
+                          }
+                        ],
+                        "default": "left"
+                    },
+                    {
+                        "type": "image_picker",
+                        "label": "Image",
+                        "id": "dk_img"
+                    },
+                    {
+                        "type": "html",
+                        "label": "Title",
+                        "id": "title",
+                        "default": "Title"
+                    },
+                    {
+                        "type": "richtext",
+                        "label": "Content",
+                        "id": "content"
+                    }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name": "Product Delivery & Guarantee",
+                "blocks":[
+                    {
+                        "type": "Column"
+                    },
+                    {
+                        "type": "Column"
+                    }
+                ]   
+            }
+        ]
+    }
+{% endschema %}

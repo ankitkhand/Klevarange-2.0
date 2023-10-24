@@ -1,0 +1,28 @@
+<div class="breadcrumb hidetab">
+    <div class="page-width">
+        <div class="grid">
+            <div class="breadcrumb">
+                <a href="/">Home</a>/{%- unless collection.title -%}all-products{%- endunless -%}<a href="{{collection.url}}">{{ collection.title }}</a>{%- if template.name == 'product' -%}/<span class="lightcolor gray">{{ product.title }}</span>{%- endif -%}
+            </div>
+
+            {% if template.name == 'product' %}
+              <div class="guarantee_checkout">
+                <h5 class="gray">GUARANTEED SAFE CHECKOUT</h5>
+                <img srcset="
+                  https://cdn.shopify.com/s/files/1/1506/1208/files/payments_840x.png?v=1554358137 840w,
+                  https://cdn.shopify.com/s/files/1/1506/1208/files/payments_600x.png?v=1554358137 600w,
+                  https://cdn.shopify.com/s/files/1/1506/1208/files/payments_212x.png?v=1554358137 212w" 
+                  sizes="
+                    (max-width: 910px) 212px,
+                    (max-width: 1340px) 300px,
+                    420px
+                  "
+                  width="420"
+                  height="19.5"
+                  alt="klevarange guarantee checkout" loading="lazy">
+              </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+ 

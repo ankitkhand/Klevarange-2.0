@@ -1,0 +1,16 @@
+{% if product.metafields.okendo.summaryData.reviewCount > 0 %}
+    <div data-oke-reviews-version="2.11.0" class="okeReviews okeReviews--theme">
+        <div class="okeReviews-reviewsSummary js-okeReviews-reviewsSummary" data-oke-ga-click-action="Star Rating Summary Click">
+            <div class="okeReviews-reviewsSummary-starRating">
+                <span class="okeReviews-starRating okeReviews-starRating--small">
+                    <span class="okeReviews-a11yText">{{ product.metafields.okendo.summaryData.reviewAverageValue | default: 0 }} out of 5</span>
+                    <span class="okeReviews-starRating-indicator" role="presentation">
+                        <span class="okeReviews-starRating-indicator-layer"></span>
+                        <span class="okeReviews-starRating-indicator-layer okeReviews-starRating-indicator-layer--foreground" style="width: {{ product.metafields.okendo.summaryData.reviewAverageValue | times: 20 }}%"></span>
+                    </span>
+                </span>
+            </div>
+            <div class="okeReviews-reviewsSummary-ratingCount">({{ product.metafields.okendo.summaryData.reviewCount | default: 0 }})</div>
+        </div>
+    </div>
+{% endif %}

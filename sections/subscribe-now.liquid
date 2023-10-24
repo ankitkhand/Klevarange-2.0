@@ -1,0 +1,66 @@
+{{ 'subscribe-animation.css' | asset_url | stylesheet_tag }}
+
+<div class="footersubscribe">
+    <div class="canvas">
+        <div class="cloud"></div>
+        <div class="cloud b"></div>
+        <div class="cloud c"></div>
+		
+        <div class="land">
+            <div class="tree"></div>
+            <div class="tree a"></div>
+            <div class="tree b"></div>
+            <div class="tree c"></div>
+            <div class="tree d"></div>
+        </div>
+        <div class="star"></div>
+        <div class="star a"></div>
+        <div class="star b"></div>
+        <div class="star c"></div>
+        <div class="star d"></div>
+        <div class="wind"></div>
+
+        <div class="eclipse">
+            <div class="sun"></div>
+            <div class="sun a"></div>
+            <div class="moon"></div>
+            <div class="moon a"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="subscribeus">
+			<div class="cloud d"></div>
+            <div class="subscribeimg">
+                <h2>Unlock Your Exclusive Discounts</h2>
+				<p>Get VIP access to sales and new product launches!</p>
+            </div>
+            
+            <div class="content">
+                {{- section.settings.klaviyoform -}}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% schema %}
+    {
+        "name": "Subscribe Now",
+        "settings": [
+            {
+                "type": "html",
+                "label": "Klaviyo Form HTML",
+                "id": "klaviyoform",
+                "default": "<div class='klaviyo-form-U45r9k'></div>"
+            }
+        ],
+        "presets":[
+            {
+                "category": "Klaviyo Form",
+                "name": "Subscribe Now"
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,27 @@
+{% if product.tags contains 'tv-special' or product.tags contains '100% cotton' or product.tags contains '100% bamboo' or product.tags contains 'super weave' or product.tags contains 'newarrival' %}
+  <div class="product-card-tags">
+    {%- if product.tags contains 'tv-special' -%}
+      <span class="tv-special">TV SPECIAL</span>
+    {%- endif -%}
+    {%- if product.tags contains 'newarrival' -%}
+      <span class="new-arrival">NEW ARRIVAL</span>
+    {%- endif -%}
+    {% if product.tags contains '100% cotton' %}
+      <span class="cotton_special">100% Cotton</span>
+    {% endif %}
+    {% if product.tags contains '100% bamboo' %}
+      <span class="bamboo_special">100% Bamboo</span>
+    {% endif %}
+    {% if product.tags contains 'super weave' %}
+      <span class="dream_weave">Super Weave</span>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% if product.tags contains 'premium-mattress-toppers' %}
+  <div class="premium_mattress_toppers">
+    <span class="brand_new_arrival">Brand
+      <strong>New</strong>
+      Arrival</span>
+  </div>
+{% endif %}
