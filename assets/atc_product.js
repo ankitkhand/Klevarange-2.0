@@ -44,6 +44,8 @@ $(function() {
 
       let allMatchingVariants = [];
 
+      $form.find('.color_divs > div.inside_color_div').addClass('disabled');
+
       // Iterate through all the color options to check stock for each
       $form.find('[name=option3]').each(function() {
         let currentColor = $(this).val();
@@ -60,11 +62,39 @@ $(function() {
           let assignedClassName = variant.option3.replace(/\s+/g, '-').toLowerCase();
           if (variant.inventory_quantity > 0 || variant.inventory_policy === 'continue') {
             $('.color_divs > div.' + assignedClassName).removeClass('disabled');
-          } else {
-            $('.color_divs > div.' + assignedClassName).addClass('disabled');
           }
         });
       });
+
+      // after iterating through all colors and checking their stock
+      let currentSelectedColor = $form.find('[name=option3]:checked').val();
+      let firstAvailableColor = null;
+
+      // Uncheck all color options
+      $form.find('[name=option3]').prop('checked', false);
+      
+      $form.find('[name=option3]').each(function() {
+        let currentColor = $(this).val();
+        let isDisabled = $('.color_divs > div.' + currentColor.replace(/\s+/g, '-').toLowerCase()).hasClass('disabled');
+
+        // if the current color is the same as the previously selected color and it's available, set it as the first available color
+        if (currentColor === currentSelectedColor && !isDisabled) {
+          firstAvailableColor = currentColor;
+          return false; // Break out of the .each loop since we've found our color
+        }
+        
+        // If no color has been set as the first available color yet and the current color is available, set it.
+        if (!firstAvailableColor && !isDisabled) {
+          firstAvailableColor = currentColor;
+        }
+
+      });
+
+      console.log(firstAvailableColor);
+
+      if (firstAvailableColor) {
+        $form.find('[name=option3][value="' + firstAvailableColor + '"]').prop('checked', true);
+      }
 
     },  
     getActiveVariant: function($form){

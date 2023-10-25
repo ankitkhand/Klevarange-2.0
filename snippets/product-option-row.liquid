@@ -121,16 +121,17 @@
                                     
                                     {%- assign optionValue = value | downcase -%}
 
-                                    {% if product.id == 6807165698119 and optionValue contains 'bamboo' or optionValue contains 'weave' %}
+                                    {% if product.id == 6807165698119 and optionValue contains 'weave' %}
                                         <a href="https://supersleeperpro.com.au/products/bamboo-royal-deluxe-dream-sheets®-4pc-set-premium-flat-sheet-fitted-sheet-pillowcases-2">{{ value }}</a>
+                                    {% elsif product.id == 6807165698119 and optionValue contains 'bamboo' %}
+                                            <a href="https://supersleeperpro.com.au/products/royal-deluxe-dream-sheets-4pc-set-bamboo-superweave?variant=40124697772103">{{ value }}</a>
                                     {% elsif product.id == 6809150521415 and optionValue contains 'cotton' %}
-                                        <a href="https://supersleeperpro.com.au/products/royal-deluxe-dream-sheets-4pc-set-cotton">{{ value }}</a>
+                                        <a href="https://supersleeperpro.com.au/products/royal-deluxe-dream-sheets-4pc-set-cotton?variant=40097917304903">{{ value }}</a>
                                     {% else %}        
                                         {{ value }}        
                                     {% endif %}
                                 </label> 
                             </div>
-
                         </div>
                     {% endfor %}
                 </div>
